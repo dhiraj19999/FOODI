@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -18,11 +19,17 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [cartcount, setCartcount] = useState(0);
   // create an account
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const updateCartcount = (count) => {
+    setCartcount(count);
+    localStorage.setItem("count", Number(count));
+    setCartcount(localStorage.getItem("count"));
   };
 
   // signup with gmail
@@ -38,6 +45,12 @@ const AuthProvider = ({ children }) => {
 
   // logout
   const logOut = () => {
+    // setCartcount(0);
+    //localStorage.setItem("count", 0);
+
+    setCartcount(0);
+    localStorage.setItem("count", cartcount);
+
     return signOut(auth);
   };
 
@@ -70,6 +83,8 @@ const AuthProvider = ({ children }) => {
     logOut,
     updateUserProfile,
     loading,
+    updateCartcount,
+    cartcount,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

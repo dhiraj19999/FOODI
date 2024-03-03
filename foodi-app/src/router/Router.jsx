@@ -18,7 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/menu",
-        element: <Menu />,
+        element: (
+          <PrivateRouter>
+            <Menu />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/signup",

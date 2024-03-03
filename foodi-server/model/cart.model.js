@@ -15,7 +15,6 @@ const cartSchema = new Schema({
   },
   menuItemId: {
     type: String,
-    required: true,
   },
 
   image: {

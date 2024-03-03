@@ -3,7 +3,8 @@ import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../contexts/AuthProvider";
-import Alert from "./Alert";
+import Swal from "sweetalert2";
+
 const Modal = () => {
   const {
     register,
@@ -42,8 +43,14 @@ const Modal = () => {
     signUpWithGmail()
       .then((result) => {
         const user = result.user;
-        alert("Login successfull!");
-
+        // alert("Login successfull!");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Succesful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         document.getElementById("my_modal_5").close();
 
         navigate(from, { replace: true });

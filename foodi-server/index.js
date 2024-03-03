@@ -3,7 +3,7 @@ const app = express();
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import mongodb from "mongodb";
+import mongodb, { ObjectId } from "mongodb";
 import { Menu } from "./model/menu.model.js";
 import { Cart } from "./model/cart.model.js";
 dotenv.config();
@@ -58,6 +58,40 @@ app.post("/cartItem", async (req, res) => {
 
   res.send(resp);
 });
+
+// delete items
+app.delete("/delete/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const filter = { _id: new ObjectId(id) };
+
+    const result = await Cart.deleteOne(filter);
+    res.json({ message: "Item deleted successfully" });
+  } catch (error) {
+    res.send(error);
+  }
+});
+//  update quantity
+app.put("/update/:id", async (req, res) => {
+  const id = req.params.id;
+  const { quantity, action } = req.body;
+  const filter = { _id: new ObjectId(id) };
+  const itemExist = await Cart.findOne(filter);
+  if (action == "INC") {
+    await Cart.findByIdAndUpdate(filter, {
+      quantity: itemExist.quantity + 1,
+      price: (itemExist.price / itemExist.quantity) * (itemExist.quantity + 1),
+    });
+    res.json({ message: "updated" });
+  } else if (action == "DEC") {
+    await Cart.findByIdAndUpdate(filter, {
+      quantity: itemExist.quantity - 1,
+      price: (itemExist.price / itemExist.quantity) * (itemExist.quantity - 1),
+    });
+    res.json({ message: "updated" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on PORT:${port}`);
 });

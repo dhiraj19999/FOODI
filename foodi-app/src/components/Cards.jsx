@@ -8,7 +8,10 @@ const Cards = ({ item }) => {
   // console.log(item)
   const { name, image, price, recipe, _id } = item;
   const [isHeartFilled, setIsHeartFilled] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, updateCartcount, cartcount } = useContext(AuthContext);
+
+  console.log(cartcount);
+  let update;
   const addToCart = async (item) => {
     //console.log("button is clicked", item);
     if (user && user?.email) {
@@ -20,28 +23,33 @@ const Cards = ({ item }) => {
         price,
         email: user.email,
       };
+
       try {
         await axios
           .post("http://localhost:4000/carts", cartItem)
           .then((res) => {
             console.log(res.data.message);
+
             Swal.fire({
-              position: "top-end",
+              position: "center",
               icon: "success",
               title: `${res.data.message}`,
-              showConfirmButton: false,
-              timer: 1500,
+              showConfirmButton: true,
+              // timer: 1500,
+            }).then((re) => {
+              if (
+                re.isConfirmed &&
+                res.data.message != "Item Already in the cart"
+              ) {
+                update = Number(Number(cartcount) + 1);
+                updateCartcount(update);
+                console.log(cartcount);
+              }
             });
           });
       } catch (error) {
         console.log(error);
       }
-    } else {
-      Swal.fire({
-        title: "You are not logged in",
-        text: "Please Login First",
-        icon: "warning",
-      });
     }
   };
   const handleHeartClick = () => {

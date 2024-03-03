@@ -14,11 +14,9 @@ const Main = () => {
         <LoadingSpinner />
       ) : (
         <div>
+          {/* navbar */}
           <Navbar />
-          <div className="min-h-screen">
-            {" "}
-            <Outlet />{" "}
-          </div>
+          <div className="min-h-screen"> {<Outlet />}</div>
 
           <Footer />
         </div>

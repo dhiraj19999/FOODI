@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
+import Swal from "sweetalert2";
 import Modal from "./Model";
 import { AuthContext } from "../contexts/AuthProvider";
 
@@ -26,7 +26,14 @@ const Signup = () => {
       .then((result) => {
         // Signed up
         const user = result.user;
-        alert("Account creation successfully done!");
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Account creation successfully done!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        //alert("Account creation successfully done!");
         document.getElementById("my_modal_5").close();
         navigate(from, { replace: true });
         // ...

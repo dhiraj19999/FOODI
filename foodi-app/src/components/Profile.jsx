@@ -1,16 +1,33 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
-
+import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Profile = ({ user }) => {
   const { logOut } = useContext(AuthContext);
   const handleLogout = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
-        alert("Succesfully logout");
+
+        // alert("Succesfully logout");
+        Swal.fire({
+          title: "Succesfully Logout",
+
+          icon: "success",
+          // showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.removeItem("count");
+            <Navigate to={"/"} />;
+            // window.location.reload();
+          }
+        });
       })
       .catch((error) => {
-        // An error happened.
+        console.log(error);
       });
   };
   return (

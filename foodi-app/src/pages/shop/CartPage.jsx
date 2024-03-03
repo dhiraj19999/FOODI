@@ -1,9 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useParams } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 import axios from "axios";
 const CartPage = () => {
-  const { user } = useContext(AuthContext);
+  const [data, setData] = useState([]);
+  const { user, updateCartcount } = useContext(AuthContext);
   console.log(user.email);
   const { email } = useParams();
   // console.log("usepara", email);
@@ -12,15 +15,71 @@ const CartPage = () => {
       await axios
         .post(`http://localhost:4000/cartItem?email=${email}`)
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
+          setData(res.data);
+          updateCartcount(res.data.length);
         })
         .catch((err) => console.log(err));
+    }
+  };
+
+  const handleDelete = async (item) => {
+    const { _id, email } = item;
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:4000/delete/${item._id}`)
+          .then((res) => getCartData());
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
+
+  const handleINC = async (item) => {
+    let quantity = 1;
+    let action = "INC";
+    if (item.quantity < 5) {
+      await axios
+        .put(`http://localhost:4000/update/${item._id}`, { quantity, action })
+        .then((res) => getCartData());
+    }
+  };
+
+  const handleDEC = async (item) => {
+    let quantity = 1;
+    let action = "DEC";
+    if (item.quantity > 1) {
+      await axios
+        .put(`http://localhost:4000/update/${item._id}`, { quantity, action })
+        .then((res) => getCartData());
     }
   };
 
   useEffect(() => {
     getCartData();
   }, []);
+
+  const totalPrice = () => {
+    let total = 0;
+    data.forEach((el) => {
+      total = total + el.price;
+    });
+    return total;
+  };
 
   return (
     <div className="section-container">
@@ -54,38 +113,74 @@ const CartPage = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              <tr>
-                <td>1</td>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img
-                          src="/tailwind-css-component-profile-2@56w.png"
-                          alt="Avatar Tailwind CSS Component"
-                        />
+              {data.map((el, ind) => {
+                return (
+                  <tr key={ind}>
+                    <td>{ind + 1}</td>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img
+                              src={el.image}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  Zemlak, Daniel and Leannon
-                  <br />
-                  <span className="badge badge-ghost badge-sm">
-                    Desktop Support Technician
-                  </span>
-                </td>
-                <td>Purple</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
+                    </td>
+                    <td className="font-medium">{el.name}</td>
+                    <td>
+                      <button
+                        className="btn btn-xs"
+                        onClick={() => handleDEC(el)}
+                        disabled={el.quantity == 1}
+                      >
+                        -
+                      </button>
+                      <input
+                        className="w-10 mx-2 text-center overflow-hidden appearance-none"
+                        type="Number"
+                        value={el.quantity}
+                        readOnly
+                      />
+                      <button
+                        className="btn btn-xs"
+                        disabled={el.quantity == 4}
+                        onClick={() => handleINC(el)}
+                      >
+                        +
+                      </button>
+                    </td>
+                    <td>{el.price}</td>
+                    <th>
+                      <button
+                        className="btn btn-ghost btn-xs"
+                        onClick={() => handleDelete(el)}
+                      >
+                        <FaTrash /> Delete
+                      </button>
+                    </th>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+        </div>
+      </div>
+      {/*customer details   */}
+      <div className="my-12 flex flex-col md:flex-row justify-between items-start">
+        <div className="md:w-1/2 space-y-3">
+          <h3 className="font-medium">Customer Details</h3>
+          <p>Name:{user.displayName}</p>
+          <p>email:{user.email}</p>
+          <p>User_id:{user.uid}</p>
+        </div>
+        <div className="md:w-1/2 space-y-3">
+          <h3 className="font-medium">Shopping Details</h3>
+          <p>Total Items:{localStorage.getItem("count")}</p>
+          <p>Total Price:{totalPrice()}</p>
+          <button className="btn bg-green text-white">Procced Checkout</button>
         </div>
       </div>
     </div>
