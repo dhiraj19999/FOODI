@@ -1,11 +1,49 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import { AuthContext } from "../contexts/AuthProvider";
+import axios from "axios";
+import Swal from "sweetalert2";
 const Cards = ({ item }) => {
   // console.log(item)
+  const { name, image, price, recipe, _id } = item;
   const [isHeartFilled, setIsHeartFilled] = useState(false);
-
+  const { user } = useContext(AuthContext);
+  const addToCart = async (item) => {
+    //console.log("button is clicked", item);
+    if (user && user?.email) {
+      const cartItem = {
+        menuItemId: _id,
+        name,
+        quantity: 1,
+        image,
+        price,
+        email: user.email,
+      };
+      try {
+        await axios
+          .post("http://localhost:4000/carts", cartItem)
+          .then((res) => {
+            console.log(res.data.message);
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `${res.data.message}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      Swal.fire({
+        title: "You are not logged in",
+        text: "Please Login First",
+        icon: "warning",
+      });
+    }
+  };
   const handleHeartClick = () => {
     setIsHeartFilled(!isHeartFilled);
   };
@@ -40,7 +78,10 @@ const Cards = ({ item }) => {
           <h5 className="font-semibold">
             <span className="text-sm text-red">$ </span> {item.price}
           </h5>
-          <button className="btn bg-green text-white  hover:bg-black hover:text-rose-300">
+          <button
+            className="btn bg-green text-white  hover:bg-black hover:text-rose-300"
+            onClick={() => addToCart(item)}
+          >
             Add to Cart{" "}
           </button>
         </div>
