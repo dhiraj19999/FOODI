@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import Modal from "./Model";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { AuthContext } from "../contexts/AuthProvider";
+import axios from "axios";
 
 const Signup = () => {
   const {
@@ -18,14 +20,50 @@ const Signup = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
-
+  const [photo, setPhoto] = useState("");
+  const [url, setUrl] = useState("");
+  const [name, setName] = useState("");
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
+    const sendImage = async () => {
+      const data = new FormData();
+      data.append("file", photo);
+      data.append("upload_preset", "FOODI-APP");
+      data.append("cloud_name", "dp5yhq9kd");
+      return await axios.post(
+        "https://api.cloudinary.com/v1_1/dp5yhq9kd/image/upload",
+        data
+      );
+    };
     createUser(email, password)
       .then((result) => {
         // Signed up
+
+        console.log(result);
+
         const user = result.user;
+
+        sendImage().then((res) => {
+          const sendUsertoBackend = {
+            email: data.email,
+            name: name,
+            photoURL: res.data.url,
+            role: "user",
+          };
+          axios
+            .post("http://localhost:4000/users", sendUsertoBackend)
+            .then((res) =>
+              localStorage.setItem(
+                "userData",
+                JSON.stringify({
+                  name: res.data.name,
+                  url: res.data.photoURL,
+                  role: res.data.role,
+                })
+              )
+            );
+        });
         Swal.fire({
           position: "top",
           icon: "success",
@@ -33,9 +71,15 @@ const Signup = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        //alert("Account creation successfully done!");
+
         document.getElementById("my_modal_5").close();
+
+        //  navigate("/");
+
+        //alert("Account creation successfully done!");
+
         navigate(from, { replace: true });
+
         // ...
       })
       .catch((error) => {
@@ -44,6 +88,9 @@ const Signup = () => {
         // ..
       });
   };
+
+  ///  image send to cloudinary
+
   return (
     <div className="max-w-md bg-white shadow w-full mx-auto flex items-center justify-center my-20">
       <div className="modal-action flex flex-col justify-center mt-0">
@@ -54,6 +101,18 @@ const Signup = () => {
         >
           <h3 className="font-bold text-lg">Create A Account!</h3>
 
+          {/* name */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              placeholder="name"
+              className="input input-bordered"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           {/* email */}
           <div className="form-control">
             <label className="label">
@@ -64,6 +123,18 @@ const Signup = () => {
               placeholder="email"
               className="input input-bordered"
               {...register("email")}
+            />
+          </div>
+
+          {/* photo */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Photo</span>
+            </label>
+            <input
+              type="file"
+              onChange={(e) => setPhoto(e.target.files[0])}
+              className="file-input file-input-bordered file-input-accent w-full max-w-xs"
             />
           </div>
 

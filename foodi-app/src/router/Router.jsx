@@ -7,6 +7,10 @@ import PrivateRouter from "../PrivateRouter/PrivateRouter";
 import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import CartPage from "../pages/shop/CartPage";
 
+import DashbordLayout from "../layout/DashbordLayout";
+import Dashbord from "../pages/dashboard/admin/Dashbord";
+import Users from "../pages/dashboard/admin/Users";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,6 +43,20 @@ const router = createBrowserRouter([
             <CartPage />
           </PrivateRouter>
         ),
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <DashbordLayout />,
+    children: [
+      {
+        path: "",
+        element: <Dashbord />,
+      },
+      {
+        path: "users",
+        element: <Users />,
       },
     ],
   },

@@ -3,11 +3,12 @@ const app = express();
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import mongodb, { ObjectId } from "mongodb";
-import { Menu } from "./model/menu.model.js";
-import { Cart } from "./model/cart.model.js";
+
 import menuRouter from "./routes/menu.route.js";
 import cartRouter from "./routes/cart.router.js";
+import userRouter from "./routes/user.route.js";
+import jwt, { decode } from "jsonwebtoken";
+
 dotenv.config();
 const port = process.env.PORT || 6000;
 app.use(cors());
@@ -26,6 +27,13 @@ const connectDB = async () => {
   }
 };
 connectDB();
+app.post("/jwt", async (req, res) => {
+  const user = req.body;
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "15d",
+  });
+  res.send({ token });
+});
 
 app.get("/", (req, res) => {
   res.send("Welcome to home page");
@@ -34,7 +42,7 @@ app.get("/", (req, res) => {
 app.use("/menu", menuRouter);
 
 app.use("/cart", cartRouter);
-
+app.use("/users", userRouter);
 app.listen(port, () => {
   console.log(`Server running on PORT:${port}`);
 });

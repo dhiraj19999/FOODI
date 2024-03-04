@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 const Profile = ({ user }) => {
-  const { logOut } = useContext(AuthContext);
+  let use = localStorage.getItem("userData");
+
+  let userData = JSON.parse(use);
+
+  // console.log("data", userData.url);
+  const { logOut, setUserInfo, userInfo } = useContext(AuthContext);
   const handleLogout = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
-
+        localStorage.removeItem("userData");
+        setUserInfo("");
         // alert("Succesfully logout");
         Swal.fire({
           title: "Succesfully Logout",
@@ -41,13 +47,10 @@ const Profile = ({ user }) => {
             className="drawer-button btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              {user.photoURL ? (
-                <img alt={user?.name || "User"} src={user.photoURL} />
+              {userInfo?.url ? (
+                <img alt={user?.name || "User"} src={userInfo?.url} />
               ) : (
-                <img
-                  alt=""
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
+                <img alt="user" src="" />
               )}
             </div>
           </label>
@@ -65,6 +68,9 @@ const Profile = ({ user }) => {
             </li>
             <li>
               <a>Order</a>
+            </li>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
             </li>
             <li>
               <a>Setting</a>

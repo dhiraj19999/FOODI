@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../contexts/AuthProvider";
 import Swal from "sweetalert2";
-
+import axios from "axios";
 const Modal = () => {
   const {
     register,
@@ -12,7 +12,14 @@ const Modal = () => {
     formState: { errors },
   } = useForm();
 
-  const { signUpWithGmail, login } = useContext(AuthContext);
+  const {
+    signUpWithGmail,
+    login,
+    user,
+    updateCartcount,
+    setUserInfo,
+    userInfo,
+  } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
 
   // redirecting to home page or specifig page
@@ -26,11 +33,41 @@ const Modal = () => {
     // console.log(email, password)
     login(email, password)
       .then((result) => {
-        const user = result.user;
+        // const user = result.user;
         alert("Login successfull");
-        console.log(user);
+        if (user && user?.email) {
+          axios
+            .get(`http://localhost:4000/cart?email=${user.email}`)
+            .then((res) => {
+              updateCartcount(res.data.length);
+              localStorage.setItem("count", Number(res.data.length));
+              axios
+                .get(
+                  `http://localhost:4000/users/singleuser?email=${user.email}`
+                )
+                .then(
+                  (res) =>
+                    localStorage.setItem(
+                      "userData",
+                      JSON.stringify({
+                        name: res.data.user.name,
+                        url: res.data.user.photoURL,
+                        role: res.data.user.role,
+                      })
+                    ),
+                  setUserInfo({
+                    name: res.data.user.name,
+                    url: res.data.user.photoURL,
+                    role: res.data.user.role,
+                  })
+                );
+            })
+            .catch((err) => console.log(err));
+        }
+
         document.getElementById("my_modal_5").close();
         navigate(from, { replace: true });
+        // window.location.reload();
       })
       .catch((error) => {
         const errorMessage = error.message;

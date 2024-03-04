@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import { Navigate } from "react-router-dom";
+import axios from "axios";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -20,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartcount, setCartcount] = useState(0);
+  const [userInfo, setUserInfo] = useState("");
   // create an account
   const createUser = (email, password) => {
     setLoading(true);
@@ -50,7 +52,7 @@ const AuthProvider = ({ children }) => {
 
     setCartcount(0);
     localStorage.setItem("count", cartcount);
-
+    localStorage.removeItem("userData");
     return signOut(auth);
   };
 
@@ -67,6 +69,14 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       // console.log(currentUser);
       setUser(currentUser);
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        axios
+          .post("http://localhost:4000/jwt", userInfo)
+          .then((res) => localStorage.setItem("Access-Token", res.data.token));
+      } else {
+        localStorage.removeItem("Access-Token");
+      }
       setLoading(false);
     });
 
@@ -85,6 +95,8 @@ const AuthProvider = ({ children }) => {
     loading,
     updateCartcount,
     cartcount,
+    setUserInfo,
+    userInfo,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
