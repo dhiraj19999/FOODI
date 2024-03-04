@@ -13,7 +13,7 @@ const CartPage = () => {
   const getCartData = async () => {
     if (user && user?.email) {
       await axios
-        .post(`http://localhost:4000/cartItem?email=${email}`)
+        .get(`http://localhost:4000/cart?email=${email}`)
         .then((res) => {
           console.log(res.data);
           setData(res.data);
@@ -25,7 +25,7 @@ const CartPage = () => {
 
   const handleDelete = async (item) => {
     const { _id, email } = item;
-
+    console.log("itemdelet", item._id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -37,14 +37,22 @@ const CartPage = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:4000/delete/${item._id}`)
-          .then((res) => getCartData());
-
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
+          .delete(`http://localhost:4000/cart/${item._id}`)
+          .then((res) => getCartData())
+          .then((res) => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your Item has been deleted.",
+              icon: "success",
+            });
+          })
+          .catch((err) => {
+            Swal.fire({
+              title: "Error",
+              text: "Something went wrong",
+              icon: "warning",
+            });
+          });
       }
     });
   };
@@ -52,9 +60,12 @@ const CartPage = () => {
   const handleINC = async (item) => {
     let quantity = 1;
     let action = "INC";
-    if (item.quantity < 5) {
+    if (item.quantity <= 4) {
       await axios
-        .put(`http://localhost:4000/update/${item._id}`, { quantity, action })
+        .put(`http://localhost:4000/cart/${item._id}`, {
+          quantity,
+          action,
+        })
         .then((res) => getCartData());
     }
   };
@@ -64,7 +75,10 @@ const CartPage = () => {
     let action = "DEC";
     if (item.quantity > 1) {
       await axios
-        .put(`http://localhost:4000/update/${item._id}`, { quantity, action })
+        .put(`http://localhost:4000/cart/${item._id}`, {
+          quantity,
+          action,
+        })
         .then((res) => getCartData());
     }
   };

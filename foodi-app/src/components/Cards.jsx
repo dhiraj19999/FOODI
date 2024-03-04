@@ -26,13 +26,17 @@ const Cards = ({ item }) => {
 
       try {
         await axios
-          .post("http://localhost:4000/carts", cartItem)
+          .post("http://localhost:4000/cart/add", cartItem)
           .then((res) => {
             console.log(res.data.message);
 
             Swal.fire({
               position: "center",
-              icon: "success",
+              icon: `${
+                res.data.message != "Item Already in the cart"
+                  ? "success"
+                  : "warning"
+              }`,
               title: `${res.data.message}`,
               showConfirmButton: true,
               // timer: 1500,

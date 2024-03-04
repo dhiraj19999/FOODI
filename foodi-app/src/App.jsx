@@ -19,7 +19,7 @@ function App() {
   const getCartData = async () => {
     if (user && user?.email) {
       await axios
-        .post(`http://localhost:4000/cartItem?email=${user.email}`)
+        .get(`http://localhost:4000/cart?email=${user.email}`)
         .then((res) => {
           console.log(res.data);
           updateCartcount(res.data.length);

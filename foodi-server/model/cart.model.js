@@ -16,6 +16,9 @@ const cartSchema = new Schema({
   menuItemId: {
     type: String,
   },
+  recipe: {
+    type: String,
+  },
 
   image: {
     type: String, // cloudinary url
