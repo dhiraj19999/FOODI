@@ -15,7 +15,7 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { createUser, login } = useContext(AuthContext);
+  const { createUser, login, setUserInfo } = useContext(AuthContext);
   // redirecting to home page or specifig page
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,14 +54,19 @@ const Signup = () => {
           axios
             .post("http://localhost:4000/users", sendUsertoBackend)
             .then((res) =>
-              localStorage.setItem(
+              /* localStorage.setItem(
                 "userData",
                 JSON.stringify({
                   name: res.data.name,
                   url: res.data.photoURL,
                   role: res.data.role,
                 })
-              )
+              )*/
+              setUserInfo({
+                name: res.data.name,
+                url: res.data.photoURL,
+                role: res.data.role,
+              })
             );
         });
         Swal.fire({
@@ -74,7 +79,7 @@ const Signup = () => {
 
         document.getElementById("my_modal_5").close();
 
-        //  navigate("/");
+        navigate("/");
 
         //alert("Account creation successfully done!");
 
