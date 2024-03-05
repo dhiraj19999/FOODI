@@ -154,7 +154,7 @@ const Navbar = () => {
                   />
                 </svg>
                 <span className="badge badge-sm indicator-item">
-                  {localStorage.getItem("count") || 0}
+                  {cartcount || 0}
                 </span>
               </div>
             </div>

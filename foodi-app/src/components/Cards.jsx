@@ -10,7 +10,6 @@ const Cards = ({ item }) => {
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const { user, updateCartcount, cartcount } = useContext(AuthContext);
 
-  console.log(cartcount);
   let update;
   const addToCart = async (item) => {
     //console.log("button is clicked", item);
@@ -85,7 +84,7 @@ const Cards = ({ item }) => {
         <Link to={`/menu/${item._id}`}>
           <h2 className="card-title">{item.name}!</h2>
         </Link>
-        <p>Description of the item</p>
+        <p className="w-[220px] font-bold">{item.recipe}</p>
         <div className="card-actions justify-between items-center mt-2">
           <h5 className="font-semibold">
             <span className="text-sm text-red">$ </span> {item.price}

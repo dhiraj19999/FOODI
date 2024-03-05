@@ -17,6 +17,7 @@ const Modal = () => {
     login,
     user,
     updateCartcount,
+    setCartcount,
     setUserInfo,
     userInfo,
   } = useContext(AuthContext);
@@ -39,8 +40,8 @@ const Modal = () => {
           axios
             .get(`http://localhost:4000/cart?email=${user.email}`)
             .then((res) => {
-              updateCartcount(res.data.length);
-              localStorage.setItem("count", Number(res.data.length));
+              setCartcount(res.data.length);
+              //localStorage.setItem("count", Number(res.data.length));
               axios
                 .get(
                   `http://localhost:4000/users/singleuser?email=${user.email}`
@@ -66,7 +67,7 @@ const Modal = () => {
         }
 
         document.getElementById("my_modal_5").close();
-        navigate(from, { replace: true });
+        navigate("/");
         // window.location.reload();
       })
       .catch((error) => {

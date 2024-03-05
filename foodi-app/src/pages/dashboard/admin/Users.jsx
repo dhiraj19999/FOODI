@@ -3,17 +3,46 @@ import axios from "axios";
 import { FaTrashAlt, FaUser, FaUsers } from "react-icons/fa";
 const Users = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  {
+    /*  Get All users   */
+  }
   const getAlluser = async () => {
+    setLoading(true);
     await axios
       .get("http://localhost:4000/users")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
+        setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err), setLoading(false));
   };
+
+  {
+    /*  Update role of user   */
+  }
+
+  const makeAdmin = async (id) => {
+    await axios.patch(`http://localhost:4000/users/admin/${id}`).then((res) => {
+      console.log(res);
+      getAlluser();
+    });
+  };
+
+  {
+    /*   delete User   */
+  }
+  const deleteUser = async (id) => {
+    await axios.delete(`http://localhost:4000/users/${id}`).then((res) => {
+      console.log(res);
+      getAlluser();
+    });
+  };
+
   useEffect(() => {
+    setLoading(true);
     getAlluser();
   }, []);
 
@@ -49,13 +78,19 @@ const Users = () => {
                       {el.role == "admin" ? (
                         "Admin"
                       ) : (
-                        <button className="btn btn-xs btn-circle text-white bg-indigo-500">
+                        <button
+                          onClick={() => makeAdmin(el._id)}
+                          className="btn btn-xs btn-circle text-white bg-indigo-500"
+                        >
                           <FaUsers />
                         </button>
                       )}
                     </td>
                     <td>
-                      <button className="btn btn-xs bg-orange-500 text-white">
+                      <button
+                        onClick={() => deleteUser(el._id)}
+                        className="btn btn-xs bg-orange-500 text-white"
+                      >
                         <FaTrashAlt />
                       </button>
                     </td>
@@ -66,6 +101,11 @@ const Users = () => {
           </table>
         </div>
       </div>
+      {loading ? (
+        <span className="loading  loading-bars loading-lg w-[60px]"></span>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

@@ -30,8 +30,6 @@ const AuthProvider = ({ children }) => {
 
   const updateCartcount = (count) => {
     setCartcount(count);
-    localStorage.setItem("count", Number(count));
-    setCartcount(localStorage.getItem("count"));
   };
 
   // signup with gmail
@@ -47,12 +45,8 @@ const AuthProvider = ({ children }) => {
 
   // logout
   const logOut = () => {
-    // setCartcount(0);
-    //localStorage.setItem("count", 0);
-
     setCartcount(0);
-    localStorage.setItem("count", cartcount);
-    localStorage.removeItem("userData");
+
     return signOut(auth);
   };
 
@@ -96,6 +90,7 @@ const AuthProvider = ({ children }) => {
     updateCartcount,
     cartcount,
     setUserInfo,
+    setCartcount,
     userInfo,
   };
   return (

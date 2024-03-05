@@ -62,10 +62,12 @@ const Signup = () => {
                   role: res.data.role,
                 })
               )*/
+              //  console.log("token", res.data.token, "name", res.data.user.name),
               setUserInfo({
                 name: res.data.name,
                 url: res.data.photoURL,
                 role: res.data.role,
+                // token: res.data.token,
               })
             );
         });
@@ -75,11 +77,9 @@ const Signup = () => {
           title: "Account creation successfully done!",
           showConfirmButton: false,
           timer: 1500,
-        });
+        }).then(() => navigate("/"));
 
         document.getElementById("my_modal_5").close();
-
-        navigate("/");
 
         //alert("Account creation successfully done!");
 

@@ -1,5 +1,5 @@
 import { User } from "../model/User.model.js";
-
+import jwt from "jsonwebtoken";
 export const getAlluser = async (req, res) => {
   try {
     const users = await User.find({});
@@ -20,6 +20,9 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
   const user = req.body;
   const query = { email: user.email };
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "10d",
+  });
   try {
     const existUser = await User.findOne({ query });
     if (existUser) {
@@ -76,7 +79,7 @@ export const makeAdmin = async (req, res) => {
     if (!updateUser) {
       return res.status(404).json({ message: "User Not found" });
     }
-    res.status(200).json(updateUser);
+    res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
     res.status(500).json({ message: error });
   }

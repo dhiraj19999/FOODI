@@ -11,12 +11,12 @@ import router from "./router/Router.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 function App() {
-  const { user, updateCartcount, setUserInfo } = useContext(AuthContext);
+  const { user, updateCartcount, setUserInfo, userInfo, setCartcount } =
+    useContext(AuthContext);
   if (!user) {
-    localStorage.removeItem("count");
-    localStorage.removeItem("userData");
+    setCartcount(0);
   }
-
+  console.log("info", userInfo);
   const getCartData = async () => {
     if (user && user?.email) {
       console.log("email", user.email);
@@ -42,7 +42,7 @@ function App() {
         .then((res) => {
           console.log(res.data);
 
-          updateCartcount(res.data.length);
+          setCartcount(res.data.length);
         })
         .catch((err) => console.log(err));
     }
@@ -51,9 +51,10 @@ function App() {
     getCartData();
 
     if (!user) {
-      localStorage.removeItem("count");
+      // localStorage.removeItem("count");
+      setCartcount(0);
     }
-  }, [user, updateCartcount]);
+  }, [user]);
 
   return (
     <>

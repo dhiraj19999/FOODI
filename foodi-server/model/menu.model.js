@@ -3,31 +3,31 @@ import mongoose, { Schema } from "mongoose";
 const menuSchema = new Schema({
   name: {
     type: String,
-    required: true,
-    trim: true,
-    index: true,
+    require: true,
   },
 
   recipe: {
     type: String,
-    required: true,
-    trim: true,
-    index: true,
+    require: true,
   },
 
   image: {
-    type: String, // cloudinary url
-    required: true,
+    type: String,
+    require: true, // cloudinary url
   },
 
   category: {
     type: String,
-    required: true,
+    require: true,
   },
 
   price: {
     type: Number,
-    required: true,
+    require: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

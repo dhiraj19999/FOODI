@@ -8,12 +8,20 @@ const Profile = ({ user }) => {
   let userData = JSON.parse(use);
 
   // console.log("data", userData.url);
-  const { logOut, setUserInfo, userInfo } = useContext(AuthContext);
+  const {
+    logOut,
+    setUserInfo,
+    userInfo,
+    cartcount,
+    setCartcount,
+    updateCartcount,
+  } = useContext(AuthContext);
   const handleLogout = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
-        localStorage.removeItem("userData");
+        // localStorage.removeItem("userData");
+        setCartcount(0);
         setUserInfo("");
         // alert("Succesfully logout");
         Swal.fire({
@@ -46,7 +54,7 @@ const Profile = ({ user }) => {
             htmlFor="my-drawer-4"
             className="drawer-button btn btn-ghost btn-circle avatar"
           >
-            <div className="w-10 rounded-full">
+            <div className="w-10 rounded-full  ">
               {userInfo?.url ? (
                 <img alt={user?.name || "User"} src={userInfo?.url} />
               ) : (

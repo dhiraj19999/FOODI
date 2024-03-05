@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import axios from "axios";
 const CartPage = () => {
   const [data, setData] = useState([]);
-  const { user, updateCartcount } = useContext(AuthContext);
+  const { user, updateCartcount, userInfo, cartcount } =
+    useContext(AuthContext);
   console.log(user.email);
   const { email } = useParams();
   // console.log("usepara", email);
@@ -15,7 +16,7 @@ const CartPage = () => {
       await axios
         .get(`http://localhost:4000/cart?email=${email}`)
         .then((res) => {
-          console.log(res.data);
+          console.log("cartdata", res.data);
           setData(res.data);
           updateCartcount(res.data.length);
         })
@@ -85,7 +86,7 @@ const CartPage = () => {
 
   useEffect(() => {
     getCartData();
-  }, []);
+  }, [user, updateCartcount]);
 
   const totalPrice = () => {
     let total = 0;
@@ -186,13 +187,13 @@ const CartPage = () => {
       <div className="my-12 flex flex-col md:flex-row justify-between items-start">
         <div className="md:w-1/2 space-y-3">
           <h3 className="font-medium">Customer Details</h3>
-          <p>Name:{user.displayName}</p>
+          <p>Name:{userInfo.name}</p>
           <p>email:{user.email}</p>
           <p>User_id:{user.uid}</p>
         </div>
         <div className="md:w-1/2 space-y-3">
           <h3 className="font-medium">Shopping Details</h3>
-          <p>Total Items:{localStorage.getItem("count")}</p>
+          <p>Total Items:{cartcount}</p>
           <p>Total Price:{totalPrice()}</p>
           <button className="btn bg-green text-white">Procced Checkout</button>
         </div>
