@@ -12,6 +12,8 @@
   "dependencies": {
     "@cloudinary/react": "^1.13.0",
     "@cloudinary/url-gen": "^1.19.0",
+    "@stripe/react-stripe-js": "^2.5.1",
+    "@stripe/stripe-js": "^3.0.7",
     "axios": "^1.6.7",
     "firebase": "^10.8.1",
     "localforage": "^1.10.0",

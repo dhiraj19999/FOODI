@@ -13,6 +13,7 @@ import Users from "../pages/dashboard/admin/Users";
 import AddMenu from "../pages/dashboard/admin/AddMenu";
 import ManageMenu from "../pages/dashboard/admin/ManageMenu";
 import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
+import Payment from "../pages/shop/Payment";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             <CartPage />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/process-checkout",
+        element: <Payment />,
       },
     ],
   },

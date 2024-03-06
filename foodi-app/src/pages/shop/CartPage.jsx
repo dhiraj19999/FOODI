@@ -1,13 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import axios from "axios";
 const CartPage = () => {
   const [data, setData] = useState([]);
-  const { user, updateCartcount, userInfo, cartcount } =
-    useContext(AuthContext);
+  const {
+    user,
+    updateCartcount,
+    userInfo,
+    cartcount,
+    cartPrice,
+    setCartPrice,
+  } = useContext(AuthContext);
   console.log(user.email);
   const { email } = useParams();
   // console.log("usepara", email);
@@ -93,6 +99,11 @@ const CartPage = () => {
     data.forEach((el) => {
       total = total + el.price;
     });
+
+    localStorage.setItem("cartPrice", total);
+
+    setCartPrice(localStorage.getItem("cartPrice"));
+    // console.log("cartPrice", cartPrice);
     return total;
   };
 
@@ -195,7 +206,12 @@ const CartPage = () => {
           <h3 className="font-medium">Shopping Details</h3>
           <p>Total Items:{cartcount}</p>
           <p>Total Price:{totalPrice()}</p>
-          <button className="btn bg-green text-white">Procced Checkout</button>
+          <Link to={"/process-checkout"}>
+            {" "}
+            <button className="btn bg-green text-white">
+              Procced Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </div>

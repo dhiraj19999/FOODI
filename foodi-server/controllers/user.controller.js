@@ -1,5 +1,10 @@
 import { User } from "../model/User.model.js";
 import jwt from "jsonwebtoken";
+
+/*    Signup User */
+
+/*  Login user     */
+
 export const getAlluser = async (req, res) => {
   try {
     const users = await User.find({});
