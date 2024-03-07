@@ -201,20 +201,27 @@ const CartPage = () => {
         </div>
       </div>
       {/*customer details   */}
-      <div className="my-12 flex flex-col md:flex-row justify-between items-start">
-        <div className="md:w-1/2 space-y-3">
+      <div className="my-12 flex flex-col md:flex-row justify-between items-start  ">
+        <div className="md:w-1/2 space-y-3 mb-5">
           <h3 className="font-medium">Customer Details</h3>
           <p>Name:{userInfo.name}</p>
           <p>email:{user.email}</p>
           <p>User_id:{user.uid}</p>
         </div>
-        <div className="md:w-1/2 space-y-3">
+        {/*   Adress detail */}
+        <div className="md:w-1/2 space-y-3 mb-5">
+          <h3 className="font-medium"> Address Details</h3>
+          <p>City:{userInfo.city}</p>
+          <p>Pin Code:{userInfo.pin}</p>
+          <p>Local :{userInfo.local}</p>
+        </div>
+        <div className="md:w-1/2 space-y-3 ">
           <h3 className="font-medium">Shopping Details</h3>
           <p>Total Items:{cartcount}</p>
           <p>Total Price:{tot}</p>
           <Link to={"/process-checkout"}>
             {" "}
-            <button className="btn bg-green text-white">
+            <button className="btn bg-green text-white mt-5">
               Procced Checkout
             </button>
           </Link>
