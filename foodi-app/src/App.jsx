@@ -11,15 +11,21 @@ import router from "./router/Router.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 function App() {
-  const { user, updateCartcount, setUserInfo, userInfo, setCartcount } =
-    useContext(AuthContext);
+  const {
+    user,
+    updateCartcount,
+    setUserInfo,
+    userInfo,
+    setCartcount,
+    cartcount,
+  } = useContext(AuthContext);
   if (!user) {
     setCartcount(0);
   }
-  console.log("info", userInfo);
+
   const getCartData = async () => {
     if (user && user?.email) {
-      console.log("email", user.email);
+      // console.log("email", user.email);
       await axios
         .get(`http://localhost:4000/users/singleuser?email=${user.email}`)
         .then((res) =>
@@ -31,16 +37,22 @@ function App() {
               role: res.data.user.role,
             })
           ),*/
+
           setUserInfo({
             name: res.data.user.name,
+            email: res.data.user.email,
             url: res.data.user.photoURL,
             role: res.data.user.role,
+            city: res.data.user.city,
+            pin: res.data.user.pin,
+            local: res.data.user.local,
+            id: res.data.user._id,
           })
         );
       await axios
         .get(`http://localhost:4000/cart?email=${user.email}`)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
 
           setCartcount(res.data.length);
         })
@@ -54,8 +66,8 @@ function App() {
       // localStorage.removeItem("count");
       setCartcount(0);
     }
-  }, [user]);
-
+  }, [user, cartcount]);
+  // console.log(userInfo);
   return (
     <>
       <RouterProvider router={router} />

@@ -84,7 +84,35 @@ export const makeAdmin = async (req, res) => {
     if (!updateUser) {
       return res.status(404).json({ message: "User Not found" });
     }
-    res.status(200).json({ message: "User updated successfully" });
+    res.status(200).json({ message: "User update successfullys" });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  const id = req.params.id;
+  const { name, photoURL, city, pin, local } = req.body;
+
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      id,
+      {
+        name: name,
+        photoURL: photoURL,
+        city: city,
+        pin: pin,
+        local: local,
+      },
+      { new: true, runValidators: true }
+    );
+    if (!updateUser) {
+      return res.status(404).json({ message: "User Not found" });
+    }
+    if (updateUser) {
+      console.log("updateduser", updateUser);
+      res.status(200).json(updateUser);
+    }
   } catch (error) {
     res.status(500).json({ message: error });
   }

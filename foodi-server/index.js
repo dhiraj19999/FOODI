@@ -8,11 +8,15 @@ import menuRouter from "./routes/menu.route.js";
 import cartRouter from "./routes/cart.router.js";
 import userRouter from "./routes/user.route.js";
 import jwt, { decode } from "jsonwebtoken";
+import Stripe from "stripe";
 
 dotenv.config();
 const port = process.env.PORT || 6000;
+
 app.use(cors());
 app.use(express.json());
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+console.log(process.env.STRIPE_SECRET_KEY);
 const connectDB = async () => {
   try {
     const connectionInstance = await mongoose.connect(
@@ -43,6 +47,22 @@ app.use("/menu", menuRouter);
 
 app.use("/cart", cartRouter);
 app.use("/users", userRouter);
+
+app.post("/create-payment-intent", async (req, res) => {
+  const { price } = req.body;
+  const total = price * 100;
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: total,
+    currency: "inr",
+
+    payment_method_types: ["card"],
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
 app.listen(port, () => {
   console.log(`Server running on PORT:${port}`);
 });

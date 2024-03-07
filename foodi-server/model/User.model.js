@@ -12,6 +12,15 @@ const userSchema = new Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  city: {
+    type: String,
+  },
+  pin: {
+    type: String,
+  },
+  local: {
+    type: String,
+  },
 });
 
 export const User = mongoose.model("User", userSchema);

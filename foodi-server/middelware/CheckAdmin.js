@@ -1,15 +1,21 @@
 import jwt from "jsonwebtoken";
+import { User } from "../model/User.model.js";
 
-const CheckAdmin = async (req, res, next) => {
+export const CheckAdmin = async (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-
-    const verify = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    if (verify) {
-      next();
+    const { email } = req.body;
+    if (!email) {
+      return res.status(401).json({ msg: "unauthorised" });
     }
-    //next();
+
+    const userExist = await User.findOne({ email: email });
+    if (!userExist || userExist.role != "admin") {
+      return res.status(401).json({ msg: "unauthorised" });
+    }
+
+    console.log("admin", userExist);
+    next();
   } catch (error) {
-    return res.status(401).json({ msg: "Invalid token" });
+    return res.status(500).json({ msg: "internal server error" });
   }
 };

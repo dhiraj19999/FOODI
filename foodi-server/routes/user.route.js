@@ -7,6 +7,7 @@ import {
   getAdmin,
   makeAdmin,
   getUser,
+  updateUser,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.post("/", createUser);
 router.delete("/:id", deleteUser);
 router.patch("/admin/:id", makeAdmin);
 router.get("/singleuser", getUser);
+router.post("/userUpdate/:id", updateUser);
 
 router.get("/admin:email", getAdmin);
 export default router;

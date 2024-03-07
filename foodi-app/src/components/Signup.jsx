@@ -26,6 +26,9 @@ const Signup = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
+    const city = data.city;
+    const pin = data.pin;
+    const local = data.local;
     const sendImage = async () => {
       const data = new FormData();
       data.append("file", photo);
@@ -50,6 +53,9 @@ const Signup = () => {
             name: name,
             photoURL: res.data.url,
             role: "user",
+            city: city,
+            pin: pin,
+            local: local,
           };
           axios
             .post("http://localhost:4000/users", sendUsertoBackend)
@@ -65,8 +71,14 @@ const Signup = () => {
               //  console.log("token", res.data.token, "name", res.data.user.name),
               setUserInfo({
                 name: res.data.name,
+                email: res.data.email,
                 url: res.data.photoURL,
                 role: res.data.role,
+                city: res.data.city,
+                pin: res.data.pin,
+                local: res.data.local,
+                id: res.data._id,
+
                 // token: res.data.token,
               })
             );
@@ -114,6 +126,7 @@ const Signup = () => {
             <input
               type="text"
               placeholder="name"
+              required
               className="input input-bordered"
               onChange={(e) => setName(e.target.value)}
             />
@@ -126,6 +139,7 @@ const Signup = () => {
             <input
               type="email"
               placeholder="email"
+              required
               className="input input-bordered"
               {...register("email")}
             />
@@ -138,11 +152,50 @@ const Signup = () => {
             </label>
             <input
               type="file"
+              required
               onChange={(e) => setPhoto(e.target.files[0])}
               className="file-input file-input-bordered file-input-accent w-full max-w-xs"
             />
           </div>
-
+          {/*   City */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">City</span>
+            </label>
+            <input
+              type="text"
+              placeholder="City"
+              required
+              className="input input-bordered"
+              {...register("city")}
+            />
+          </div>
+          {/*Pin code */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Pin Code</span>
+            </label>
+            <input
+              type="number"
+              placeholder="name"
+              required
+              className="input input-bordered"
+              {...register("pin")}
+            />
+          </div>
+          {/*  Local address  */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Local address</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Local address"
+              required
+              className="input input-bordered"
+              {...register("local")}
+            />
+          </div>
           {/* password */}
           <div className="form-control">
             <label className="label">
@@ -150,6 +203,7 @@ const Signup = () => {
             </label>
             <input
               type="password"
+              required
               placeholder="password"
               className="input input-bordered"
               {...register("password")}

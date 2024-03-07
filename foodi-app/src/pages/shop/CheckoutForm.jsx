@@ -1,12 +1,25 @@
 import { CardElement } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
 import { FaPaypal } from "react-icons/fa";
 import { useElements } from "@stripe/react-stripe-js";
-const CheckoutForm = ({ price, cartcount }) => {
+import axios from "axios";
+const CheckoutForm = ({ price, cartcount, name, email }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [carderror, setCarderror] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:4000/create-payment-intent", { price })
+      .then(
+        (res) => setClientSecret(res.data.clientSecret),
+        console.log(clientSecret)
+      )
+      .catch((err) => console.log(err));
+  }, [price]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -26,7 +39,28 @@ const CheckoutForm = ({ price, cartcount }) => {
       //console.log("[error]", error);
       setCarderror(error.message);
     } else {
+      setCarderror("success");
       console.log("[paymentmethod]", paymentMethod);
+    }
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+
+          billing_details: {
+            name: name,
+            email: email,
+          },
+        },
+      });
+    if (confirmError) {
+      console.log(confirmError);
+    }
+    if (paymentIntent.status == "succeeded") {
+      console.log(paymentIntent);
+      setCarderror(
+        `Your transction is success and transction  id is ${paymentIntent.id}`
+      );
     }
   };
 

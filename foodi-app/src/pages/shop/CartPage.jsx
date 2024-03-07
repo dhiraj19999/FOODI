@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 const CartPage = () => {
   const [data, setData] = useState([]);
+  const [tot, setTot] = useState(0);
   const {
     user,
     updateCartcount,
@@ -24,8 +25,10 @@ const CartPage = () => {
         .then((res) => {
           console.log("cartdata", res.data);
           setData(res.data);
+          totalPrice(res.data);
           updateCartcount(res.data.length);
         })
+
         .catch((err) => console.log(err));
     }
   };
@@ -53,6 +56,7 @@ const CartPage = () => {
               icon: "success",
             });
           })
+
           .catch((err) => {
             Swal.fire({
               title: "Error",
@@ -94,17 +98,19 @@ const CartPage = () => {
     getCartData();
   }, [user, updateCartcount]);
 
-  const totalPrice = () => {
+  const totalPrice = (dat) => {
     let total = 0;
-    data.forEach((el) => {
+    dat.forEach((el) => {
       total = total + el.price;
     });
-
-    localStorage.setItem("cartPrice", total);
+    let roundFig = total.toFixed(0);
+    console.log(roundFig);
+    localStorage.setItem("cartPrice", roundFig);
 
     setCartPrice(localStorage.getItem("cartPrice"));
+    setTot(roundFig);
     // console.log("cartPrice", cartPrice);
-    return total;
+    //return roundFig;
   };
 
   return (
@@ -205,7 +211,7 @@ const CartPage = () => {
         <div className="md:w-1/2 space-y-3">
           <h3 className="font-medium">Shopping Details</h3>
           <p>Total Items:{cartcount}</p>
-          <p>Total Price:{totalPrice()}</p>
+          <p>Total Price:{tot}</p>
           <Link to={"/process-checkout"}>
             {" "}
             <button className="btn bg-green text-white">
