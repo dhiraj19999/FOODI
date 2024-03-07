@@ -54,12 +54,22 @@ const Modal = () => {
                         name: res.data.user.name,
                         url: res.data.user.photoURL,
                         role: res.data.user.role,
+                        email: res.data.user.email,
+                        city: res.data.user.city,
+                        pin: res.data.user.pin,
+                        local: res.data.user.local,
+                        id: res.data.user._id,
                       })
                     ),
                   setUserInfo({
                     name: res.data.user.name,
+                    email: res.data.user.email,
                     url: res.data.user.photoURL,
                     role: res.data.user.role,
+                    city: res.data.user.city,
+                    pin: res.data.user.pin,
+                    local: res.data.user.local,
+                    id: res.data.user._id,
                   })
                 );
             })
