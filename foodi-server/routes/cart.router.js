@@ -6,9 +6,12 @@ import {
   addToCart,
   deleteCartItem,
   updateCartItem,
+  DeleteAll,
 } from "../controllers/cart.controller.js";
 // get all cart items
 router.get("/", getAllCartItem);
+
+router.post("/deleteAll", DeleteAll);
 
 //  add to cart item
 router.post("/add", addToCart);

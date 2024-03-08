@@ -3,14 +3,32 @@ import React, { useEffect, useState } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
 import { FaPaypal } from "react-icons/fa";
 import { useElements } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
+import Swal from "sweetalert2";
 import axios from "axios";
 const CheckoutForm = ({ price, cartcount, name, email }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const [data, setData] = useState([]);
   const [carderror, setCarderror] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const navigate = useNavigate();
+  const { setCartcount } = useContext(AuthContext);
+  const getCartData = async () => {
+    await axios
+      .get(`http://localhost:4000/cart?email=${email}`)
+      .then((res) => {
+        console.log("cartdata", res.data);
+        setData(res.data);
+      })
+
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
+    getCartData();
     axios
       .post("http://localhost:4000/create-payment-intent", { price })
       .then(
@@ -39,7 +57,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
       //console.log("[error]", error);
       setCarderror(error.message);
     } else {
-      setCarderror("success");
+      // setCarderror("success");
       console.log("[paymentmethod]", paymentMethod);
     }
     const { paymentIntent, error: confirmError } =
@@ -58,9 +76,34 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
     }
     if (paymentIntent.status == "succeeded") {
       console.log(paymentIntent);
+
       setCarderror(
         `Your transction is success and transction  id is ${paymentIntent.id}`
       );
+      axios
+        .post(`http://localhost:4000/orders/add`, {
+          email: email,
+          price: price,
+          status: "Pending",
+          TransctionId: paymentIntent.id,
+          ordrDate: new Date().toUTCString().slice(5, 16),
+          items: data?.map((item) => item),
+        })
+        .then((res) =>
+          axios
+            .post(`http://localhost:4000/cart/deleteAll?email=${email}`)
+            .then((res) => setCartcount(0))
+            .then(() =>
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Transaction successfully done!",
+                showConfirmButton: false,
+                timer: 3000,
+              })
+            )
+            .then(() => navigate("/orders"))
+        );
     }
   };
 

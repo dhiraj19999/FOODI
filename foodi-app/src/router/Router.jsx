@@ -14,6 +14,7 @@ import AddMenu from "../pages/dashboard/admin/AddMenu";
 import ManageMenu from "../pages/dashboard/admin/ManageMenu";
 import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
 import Payment from "../pages/shop/Payment";
+import Orders from "../pages/shop/Orders";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             <Menu />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
       },
       {
         path: "/signup",

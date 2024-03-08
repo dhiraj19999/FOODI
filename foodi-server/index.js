@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import menuRouter from "./routes/menu.route.js";
 import cartRouter from "./routes/cart.router.js";
 import userRouter from "./routes/user.route.js";
+import orderRouter from "./routes/order.router.js";
 import jwt, { decode } from "jsonwebtoken";
 import Stripe from "stripe";
 
@@ -47,6 +48,7 @@ app.use("/menu", menuRouter);
 
 app.use("/cart", cartRouter);
 app.use("/users", userRouter);
+app.use("/orders", orderRouter);
 
 app.post("/create-payment-intent", async (req, res) => {
   const { price } = req.body;

@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { Cart } from "../model/cart.model.js";
 
 export const getAllCartItem = async (req, res) => {
@@ -75,6 +76,20 @@ export const updateCartItem = async (req, res) => {
       });
       return res.json({ message: "updated" });
     }
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+};
+
+//   delete all cart items//
+
+export const DeleteAll = async (req, res) => {
+  const email = req.query.email;
+  try {
+    const resp = await Cart.find({ email: email });
+    const itemid = await resp.map((id) => new ObjectId(id));
+    const deleteCartreq = await Cart.deleteMany({ _id: { $in: itemid } });
+    res.status(200).json({ deleteCartreq, message: "deletd Successfully" });
   } catch (error) {
     return res.status(500).json({ message: error });
   }

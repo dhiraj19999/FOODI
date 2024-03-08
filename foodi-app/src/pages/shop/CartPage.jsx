@@ -219,12 +219,20 @@ const CartPage = () => {
           <h3 className="font-medium">Shopping Details</h3>
           <p>Total Items:{cartcount}</p>
           <p>Total Price:{tot}</p>
-          <Link to={"/process-checkout"}>
-            {" "}
-            <button className="btn bg-green text-white mt-5">
-              Procced Checkout
-            </button>
-          </Link>
+
+          {cartcount > 0 ? (
+            <Link to={"/process-checkout"}>
+              <button className="btn bg-green text-white mt-5">
+                Procced Checkout
+              </button>
+            </Link>
+          ) : (
+            <Link to={"/menu"}>
+              <button className="btn bg-green text-white mt-5">
+                Back to Menu
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
