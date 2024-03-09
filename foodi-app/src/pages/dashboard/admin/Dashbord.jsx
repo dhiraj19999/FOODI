@@ -4,10 +4,15 @@ import axios from "axios";
 import { Doughnut } from "react-chartjs-2";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import { FaUsers } from "react-icons/fa";
+import userImg from "../../../../public/man.png";
+import money1 from "../../../../public/money1.png";
+import money from "../../../../public/money.png";
+import gift from "../../../../public/gift-box.png";
 
 const Dashbord = () => {
-  const { user } = useContext(AuthContext);
-
+  const { user, userInfo } = useContext(AuthContext);
+  console.log(userInfo);
   const [total, setTotal] = useState(0);
   const [salad, setSalad] = useState(0);
   const [pizza, setPizza] = useState(0);
@@ -19,6 +24,9 @@ const Dashbord = () => {
   const [soupstock, setSoupstock] = useState(0);
   const [desertstock, setDesertstock] = useState(0);
   const [drinkstock, setDrinkstock] = useState(0);
+  const [totalmenu, setTotalmenu] = useState(0);
+  const [totalSale, setTotalSale] = useState(0);
+  const [totalUser, setTotalUser] = useState(0);
   let tot = 0;
   let drnk = 0;
   let sou = 0;
@@ -29,6 +37,7 @@ const Dashbord = () => {
     console.log("dashCalculation");
 
     await dat?.map((el) => {
+      setTotalSale((prev) => prev + el.price);
       totalCal(el.items);
     });
 
@@ -36,9 +45,11 @@ const Dashbord = () => {
   };
 
   const getOrders = async () => {
-    await axios.get("http://localhost:4000/orders").then((res) => {
-      dashCalculation(res.data);
-    });
+    await axios
+      .get("http://localhost:4000/orders", userInfo?.email)
+      .then((res) => {
+        dashCalculation(res.data);
+      });
   };
 
   const totalCal = (item) => {
@@ -73,6 +84,7 @@ const Dashbord = () => {
   const fetchData = async () => {
     await axios.get("http://localhost:4000/menu").then((res) => {
       stock(res.data);
+      setTotalmenu(res.data.length);
     });
   };
 
@@ -96,9 +108,19 @@ const Dashbord = () => {
     });
   };
 
+  const getAlluser = async () => {
+    await axios
+      .get("http://localhost:4000/users")
+      .then((res) => {
+        setTotalUser(res.data.length);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getOrders();
     fetchData();
+    getAlluser();
   }, []);
   const data = {
     labels: ["Salad", "Pizza", "Soup", "Drinks", "Dessert"],
@@ -135,23 +157,51 @@ const Dashbord = () => {
     ],
   };
   return (
-    <div className="flex  flex-col sm:flex-row gap-32 items-center">
-      <div className="mt-5 ">
-        <h4 className="md:text-2xl text-md font-bold md:leading-snug leading-snug text-green">
-          Items People
-          <span className="ml-3 text-rose-500">Loves Most</span>
-        </h4>
-        <div className="mt-5">
-          <Doughnut data={data} />
+    <div>
+      <div className="flex  flex-col sm:flex-row gap-32 items-center justify-center ml-7">
+        <div className="card w-60 text-primary-content bg-gradient-to-r from-violet-600 to-fuchsia-700 ">
+          <div className="card-body  items-center justify-center  ">
+            <h1 className="text-bold  text-rose-200 ">All Users</h1>
+            <img src={userImg} className="  w-14" />
+            <h1 className="text text-rose-200">{totalUser}</h1>
+          </div>
+        </div>
+
+        <div className="card w-60 text-primary-content bg-black">
+          <div className="card-body  items-center justify-center">
+            <h1 className="text-bold  text-rose-300 ">Total Sale</h1>
+            <img src={money} className="  w-14" />
+            <h1 className="bg text-rose-300"> ₹ {totalSale}</h1>
+          </div>
+        </div>
+
+        <div className="card w-60 text-primary-content bg-gradient-to-r from-purple-500 to-teal-500">
+          <div className="card-body  items-center justify-center">
+            <h1 className="text text-rose-200 ">Itmes in Stocks</h1>
+            <img src={gift} className="  w-14" />
+            <h1 className="text text-rose-200">{totalmenu}</h1>
+          </div>
         </div>
       </div>
-      <div className="mt-5">
-        <h4 className="md:text-2xl text-md font-bold md:leading-snug leading-snug text-green">
-          Items
-          <span className="ml-3 text-rose-500">In Stock</span>
-        </h4>
-        <div className="mt-5">
-          <Doughnut data={menudata} />
+
+      <div className="flex  flex-col sm:flex-row  items-center ml-7 gap-[350px]  mt-[100px] ">
+        <div className="">
+          <h4 className="md:text-2xl text-md font-bold md:leading-snug leading-snug text-green">
+            Items People
+            <span className="ml-3 text-rose-500">Loves Most</span>
+          </h4>
+          <div className="mt-3">
+            <Doughnut data={data} />
+          </div>
+        </div>
+        <div className="">
+          <h4 className="md:text-2xl text-md font-bold md:leading-snug  leading-snug text-green">
+            Items
+            <span className="ml-3 text-rose-500">In Stock</span>
+          </h4>
+          <div className="mt-3 ">
+            <Doughnut data={menudata} />
+          </div>
         </div>
       </div>
     </div>

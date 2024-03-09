@@ -5,9 +5,12 @@ import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../contexts/AuthProvider";
+import { useContext } from "react";
+
 const ManageMenu = () => {
   const [menu, setMenu] = useState([]);
-
+  const { user, userInfo } = useContext(AuthContext);
   const handleDelete = async (item) => {
     const { _id, email } = item;
     console.log("itemdelet", item._id);
@@ -22,7 +25,7 @@ const ManageMenu = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:4000/menu/${item._id}`)
+          .delete(`http://localhost:4000/menu/${item._id}`, userInfo.email)
           .then((res) => fetchData())
           .then((res) => {
             Swal.fire({

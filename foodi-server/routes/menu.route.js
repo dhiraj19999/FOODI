@@ -10,8 +10,8 @@ import { CheckAdmin } from "../middelware/CheckAdmin.js";
 const router = express.Router();
 
 router.get("/", getMenu);
-router.post("/add", addToMenu);
-router.delete("/:id", deleteMenuItem);
+router.post("/add", CheckAdmin, addToMenu); // done
+router.delete("/:id", deleteMenuItem); // done
 router.get("/:id", SingleMenuItem);
-router.patch("/:id", UpdateMenuItem);
+router.patch("/:id", CheckAdmin, UpdateMenuItem); // done
 export default router;

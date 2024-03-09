@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 /*  Login user     */
 
 export const getAlluser = async (req, res) => {
+  // const { email } = req.body;
   try {
     const users = await User.find({});
     res.status(200).json(users);

@@ -5,8 +5,11 @@ import { FaUtensils } from "react-icons/fa";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthProvider";
 const UpdateMenu = () => {
   const { id } = useParams();
+  const { user, userInfo } = useContext(AuthContext);
   const [item, setItem] = useState("");
   const { register, handleSubmit } = useForm();
   const [photo, setPhoto] = useState("");
@@ -28,6 +31,7 @@ const UpdateMenu = () => {
             image: res.data.url,
             category: dat.category,
             price: dat.price,
+            email: userInfo.email,
           })
           .then((res) => console.log("udate", res.data))
       )

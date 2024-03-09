@@ -9,13 +9,13 @@ import {
   getUser,
   updateUser,
 } from "../controllers/user.controller.js";
-
+import { CheckAdmin } from "../middelware/CheckAdmin.js";
 const router = express.Router();
 
-router.get("/", getAlluser);
+router.get("/", getAlluser); // done
 router.post("/", createUser);
-router.delete("/:id", deleteUser);
-router.patch("/admin/:id", makeAdmin);
+router.delete("/:id", deleteUser); // done
+router.patch("/admin/:id", CheckAdmin, makeAdmin); // done
 router.get("/singleuser", getUser);
 router.post("/userUpdate/:id", updateUser);
 

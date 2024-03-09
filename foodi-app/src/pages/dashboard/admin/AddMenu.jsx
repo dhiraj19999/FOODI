@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { FaUtensils } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../../contexts/AuthProvider";
+import { useContext } from "react";
 import axios from "axios";
 const AddMenu = () => {
+  const { user, userInfo } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const [photo, setPhoto] = useState("");
   //console.log(data.image[0].name
@@ -18,6 +21,7 @@ const AddMenu = () => {
             image: res.data.url,
             category: dat.category,
             price: dat.price,
+            email: userInfo.email,
           })
           .then((res) => console.log(res.data))
       )

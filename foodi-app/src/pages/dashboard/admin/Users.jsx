@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrashAlt, FaUser, FaUsers } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthProvider";
 const Users = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const { user, userInfo } = useContext(AuthContext);
   {
     /*  Get All users   */
   }
+  console.log(user.email);
   const getAlluser = async () => {
     setLoading(true);
     await axios
@@ -25,20 +28,24 @@ const Users = () => {
   }
 
   const makeAdmin = async (id) => {
-    await axios.patch(`http://localhost:4000/users/admin/${id}`).then((res) => {
-      console.log(res);
-      getAlluser();
-    });
+    await axios
+      .patch(`http://localhost:4000/users/admin/${id}`, userInfo.email)
+      .then((res) => {
+        console.log(res);
+        getAlluser();
+      });
   };
 
   {
     /*   delete User   */
   }
   const deleteUser = async (id) => {
-    await axios.delete(`http://localhost:4000/users/${id}`).then((res) => {
-      console.log(res);
-      getAlluser();
-    });
+    await axios
+      .delete(`http://localhost:4000/users/${id}`, userInfo.email)
+      .then((res) => {
+        console.log(res);
+        getAlluser();
+      });
   };
 
   useEffect(() => {

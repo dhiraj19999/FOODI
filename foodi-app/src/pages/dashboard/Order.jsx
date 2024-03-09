@@ -2,12 +2,16 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
 import Swal from "sweetalert2";
 const Order = () => {
   const [data, setData] = useState([]);
+  const { user, userInfo } = useContext(AuthContext);
+  console.log(userInfo.email);
   const getOrders = async () => {
     await axios
-      .get("http://localhost:4000/orders")
+      .get("http://localhost:4000/orders", userInfo.email)
       .then((res) => setData(res.data));
   };
   const handleDelete = async (item) => {
@@ -24,7 +28,9 @@ const Order = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:4000/orders/${item._id}`)
+          .delete(`http://localhost:4000/orders/${item._id}`, {
+            email: userInfo.email,
+          })
           .then((res) => getOrders())
           .then((res) => {
             Swal.fire({
@@ -50,7 +56,10 @@ const Order = () => {
 
   const updateStat = async (stat, id) => {
     await axios
-      .patch(`http://localhost:4000/orders/${id}`, { status: stat })
+      .patch(`http://localhost:4000/orders/${id}`, {
+        status: stat,
+        email: userInfo.email,
+      })
       .then((res) => getOrders());
   };
 
