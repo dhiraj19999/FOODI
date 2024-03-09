@@ -124,11 +124,11 @@ const Dashbord = () => {
       {
         data: [saladstock, pizzstock, soupstock, drinkstock, desertstock],
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255,20,147)",
-          "rgb(255,127,80)",
-          "rgb(0,128,128)",
+          "#cc2b5e",
+          "#eb3349",
+          "#ef629f",
+          "#06beb6",
+          "#7b4397",
         ],
         hoverOffset: 4,
       },
@@ -136,7 +136,6 @@ const Dashbord = () => {
   };
   return (
     <div className="flex  flex-col sm:flex-row gap-32 items-center">
-      <h1>saladstock:{saladstock}</h1>
       <div className="mt-5 ">
         <h4 className="md:text-2xl text-md font-bold md:leading-snug leading-snug text-green">
           Items People
