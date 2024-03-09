@@ -15,6 +15,7 @@ import ManageMenu from "../pages/dashboard/admin/ManageMenu";
 import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
 import Payment from "../pages/shop/Payment";
 import Orders from "../pages/shop/Orders";
+import Order from "../pages/dashboard/Order";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Dashbord />,
+      },
+      {
+        path: "mangeOrders",
+        element: <Order />,
       },
       {
         path: "users",

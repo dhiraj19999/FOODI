@@ -6,7 +6,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 const Cards = ({ item }) => {
   // console.log(item)
-  const { name, image, price, recipe, _id } = item;
+  const { name, image, price, recipe, _id, category } = item;
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const { user, updateCartcount, cartcount } = useContext(AuthContext);
 
@@ -21,6 +21,8 @@ const Cards = ({ item }) => {
         image,
         price,
         email: user.email,
+
+        category: category,
       };
 
       try {

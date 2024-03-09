@@ -17,7 +17,7 @@ const CartPage = () => {
   } = useContext(AuthContext);
   console.log(user.email);
   const { email } = useParams();
-  // console.log("usepara", email);
+  console.log("cartdata", data);
   const getCartData = async () => {
     if (user && user?.email) {
       await axios

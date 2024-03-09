@@ -51,3 +51,22 @@ export const updatestatus = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
+
+/*route for admin delete*/
+export const deleteOrderItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    // const filter = { _id: new ObjectId(id) };
+
+    // const result = await Cart.deleteOne(filter);
+    const prod = await Order.findById(id);
+    console.log("result", prod);
+    const result = await Order.findByIdAndDelete(id);
+
+    if (result) {
+      res.status(200).json({ message: "Item deleted successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "error" });
+  }
+};

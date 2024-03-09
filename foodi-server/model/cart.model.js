@@ -33,6 +33,10 @@ const cartSchema = new Schema({
     type: Number,
     required: true,
   },
+
+  category: {
+    type: String,
+  },
 });
 
 export const Cart = mongoose.model("Cart", cartSchema);

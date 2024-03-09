@@ -79,7 +79,7 @@ const DashbordLayout = () => {
               </Link>
             </li>
             <li>
-              <Link to={"/dashboard"}>
+              <Link to={"/dashboard/mangeOrders"}>
                 {" "}
                 <FaShoppingCart /> Manage Bookings
               </Link>
