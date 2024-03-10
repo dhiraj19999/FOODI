@@ -98,7 +98,7 @@ const ManageMenu = () => {
                     {el.name}
                     <br />
                   </td>
-                  <td>${el.price}</td>
+                  <td> ₹{el.price}</td>
                   <td>
                     <Link to={`/dashboard/update-menu/${el._id}`}>
                       {" "}

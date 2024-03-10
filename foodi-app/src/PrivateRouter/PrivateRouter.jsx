@@ -4,11 +4,12 @@ import { Navigate, useLocation } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Alert from "../components/Alert";
 import Swal from "sweetalert2";
+
 const PrivateRouter = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
   if (loading) {
-    return <p>Loading</p>;
+    return <LoadingSpinner />;
   }
   if (user) {
     return children;

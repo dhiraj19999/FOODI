@@ -27,7 +27,6 @@ const AuthProvider = ({ children }) => {
   );
   // create an account
   const createUser = (email, password) => {
-    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 

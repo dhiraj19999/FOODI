@@ -15,7 +15,8 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const { createUser, login, setUserInfo } = useContext(AuthContext);
+  const { createUser, login, setUserInfo, setLoading } =
+    useContext(AuthContext);
   // redirecting to home page or specifig page
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Signup = () => {
   const [photo, setPhoto] = useState("");
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
+  const [loadin, setLoadin] = useState(false);
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
@@ -42,7 +44,7 @@ const Signup = () => {
     createUser(email, password)
       .then((result) => {
         // Signed up
-
+        setLoadin(true);
         console.log(result);
 
         const user = result.user;
@@ -57,9 +59,8 @@ const Signup = () => {
             pin: pin,
             local: local,
           };
-          axios
-            .post("http://localhost:4000/users", sendUsertoBackend)
-            .then((res) =>
+          axios.post("http://localhost:4000/users", sendUsertoBackend).then(
+            (res) =>
               /* localStorage.setItem(
                 "userData",
                 JSON.stringify({
@@ -67,42 +68,60 @@ const Signup = () => {
                   url: res.data.photoURL,
                   role: res.data.role,
                 })
-              )*/
-              //  console.log("token", res.data.token, "name", res.data.user.name),
-              setUserInfo({
-                name: res.data.name,
-                email: res.data.email,
-                url: res.data.photoURL,
-                role: res.data.role,
-                city: res.data.city,
-                pin: res.data.pin,
-                local: res.data.local,
-                id: res.data._id,
+              )*/ setLoadin(false),
+            //  console.log("token", res.data.token, "name", res.data.user.name),
+            setUserInfo({
+              name: res.data.name,
+              email: res.data.email,
+              url: res.data.photoURL,
+              role: res.data.role,
+              city: res.data.city,
+              pin: res.data.pin,
+              local: res.data.local,
+              id: res.data._id,
 
-                // token: res.data.token,
-              })
-            );
+              // token: res.data.token,
+            })
+          );
         });
         Swal.fire({
-          position: "top",
+          position: "center",
           icon: "success",
           title: "Account creation successfully done!",
           showConfirmButton: false,
           timer: 1500,
-        }).then(() => navigate("/"));
+        })
+          .then(() => navigate("/"))
+          .catch(() => {
+            Swal.fire({
+              position: "top",
+              icon: "warning",
+              title: "Something went wrong!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            //setLoading(false);
+            navigate("/");
+            setLoadin(false);
+          });
 
         document.getElementById("my_modal_5").close();
 
         //alert("Account creation successfully done!");
 
-        navigate(from, { replace: true });
+        //navigate(from, { replace: true });
 
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+        // ..text-neutral
+        Swal.fire({
+          position: "top",
+          icon: "warning",
+          title: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => setLoadin(false), navigate("/"));
       });
   };
 
@@ -219,11 +238,17 @@ const Signup = () => {
 
           {/* login btn */}
           <div className="form-control mt-6">
-            <input
+            <button
               type="submit"
               value="Signup"
-              className="btn bg-green text-white"
-            />
+              className="btn bg-green text-white "
+            >
+              {loadin ? (
+                <span className="loading loading-infinity loading-lg text-neutral"></span>
+              ) : (
+                "SignUp"
+              )}
+            </button>
           </div>
 
           <p className="text-center my-2">
@@ -235,27 +260,9 @@ const Signup = () => {
               Login
             </button>{" "}
           </p>
-
-          <button
-            onClick={() => navigate("/")}
-            className="btn btn-sm btn-circle btn-ghost absolute right-9 top-2"
-          >
-            ✕
-          </button>
         </form>
 
         {/* social sign in */}
-        <div className="text-center space-x-3 mb-5">
-          <button className="btn btn-circle hover:bg-green hover:text-white">
-            <FaGoogle />
-          </button>
-          <button className="btn btn-circle hover:bg-green hover:text-white">
-            <FaFacebookF />
-          </button>
-          <button className="btn btn-circle hover:bg-green hover:text-white">
-            <FaGithub />
-          </button>
-        </div>
       </div>
       <Modal />
     </div>

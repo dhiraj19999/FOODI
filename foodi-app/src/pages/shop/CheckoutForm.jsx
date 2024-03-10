@@ -15,6 +15,8 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
   const [carderror, setCarderror] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const { setCartcount } = useContext(AuthContext);
   const getCartData = async () => {
     await axios
@@ -40,12 +42,17 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
+
     if (!stripe || !elements) {
+      setLoading(false);
       return;
     }
-    const card = elements.getElement(CardElement);
+    let card = elements.getElement(CardElement);
 
+    console.log(card);
     if (card == null) {
+      setLoading(false);
       return;
     }
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -56,6 +63,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
     if (error) {
       //console.log("[error]", error);
       setCarderror(error.message);
+      setLoading(false);
     } else {
       // setCarderror("success");
       console.log("[paymentmethod]", paymentMethod);
@@ -73,10 +81,11 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
       });
     if (confirmError) {
       console.log(confirmError);
+      setLoading(false);
     }
     if (paymentIntent.status == "succeeded") {
       console.log(paymentIntent);
-
+      setLoading(false);
       setCarderror(
         `Your transction is success and transction  id is ${paymentIntent.id}`
       );
@@ -89,7 +98,8 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
           ordrDate: new Date().toUTCString().slice(5, 16),
           items: data?.map((item) => item),
         })
-        .then((res) =>
+        .then(
+          (res) => setLoading(false),
           axios
             .post(`http://localhost:4000/cart/deleteAll?email=${email}`)
             .then((res) => setCartcount(0))
@@ -112,7 +122,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
       {/*  left side */}
       <div className="md:w-1/2 w-full space-y-3">
         <h4 className="text-lg font-semibold">Order Summary</h4>
-        <p>Total Price: $ {price}</p>
+        <p>Total Price: ₹ {price}</p>
         <p>Number of Items:{cartcount}</p>
       </div>
 
@@ -127,6 +137,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
               style: {
                 base: {
                   fontSize: "16px",
+
                   color: "#424770",
                   "::placeholder": { color: "#aab7c4" },
                 },
@@ -139,7 +150,11 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
             type="submit"
             disabled={!stripe}
           >
-            Pay
+            {loading ? (
+              <span className="loading loading-infinity loading-lg text-neutral"></span>
+            ) : (
+              "Pay"
+            )}
           </button>
         </form>
         {carderror ? (

@@ -2,11 +2,15 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { FaLocationArrow, FaQuestionCircle, FaUsers } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
+import { Navigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaBagShopping, FaCirclePlus } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { MdDashboardCustomize } from "react-icons/md";
+import { AuthContext } from "../contexts/AuthProvider";
+import { useContext } from "react";
 import { FaUserAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
 import logo from "/logo.png";
 const sharedLinks = (
   <>
@@ -36,6 +40,44 @@ const sharedLinks = (
   </>
 );
 const DashbordLayout = () => {
+  const {
+    logOut,
+    setUserInfo,
+    userInfo,
+    cartcount,
+    setCartcount,
+    updateCartcount,
+  } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        // Sign-out successful.
+        // localStorage.removeItem("userData");
+        setCartcount(0);
+        setUserInfo("");
+        // alert("Succesfully logout");
+        Swal.fire({
+          title: "Succesfully Logout",
+
+          icon: "success",
+          // showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.removeItem("count");
+            <Navigate to={"/"} />;
+            // window.location.reload();
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <div className="drawer sm:drawer-open">
@@ -49,7 +91,10 @@ const DashbordLayout = () => {
             >
               <MdDashboardCustomize />
             </label>
-            <button className="btn flex items-center gap-2 rounded-full px-6 bg-green sm:hidden text-white">
+            <button
+              onClick={() => handleLogout()}
+              className="btn flex items-center gap-2 rounded-full px-6 bg-green sm:hidden text-white"
+            >
               <FaUserAlt /> Log Out
             </button>
           </div>

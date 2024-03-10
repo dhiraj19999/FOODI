@@ -29,7 +29,9 @@ const Users = () => {
 
   const makeAdmin = async (id) => {
     await axios
-      .patch(`http://localhost:4000/users/admin/${id}`, userInfo.email)
+      .patch(`http://localhost:4000/users/admin/${id}`, {
+        email: userInfo.email,
+      })
       .then((res) => {
         console.log(res);
         getAlluser();
@@ -41,7 +43,7 @@ const Users = () => {
   }
   const deleteUser = async (id) => {
     await axios
-      .delete(`http://localhost:4000/users/${id}`, userInfo.email)
+      .delete(`http://localhost:4000/users/${id}`, { email: userInfo.email })
       .then((res) => {
         console.log(res);
         getAlluser();

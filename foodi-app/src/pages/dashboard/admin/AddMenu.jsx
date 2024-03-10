@@ -3,13 +3,16 @@ import { FaUtensils } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { useContext } from "react";
+import Swal from "sweetalert2";
 import axios from "axios";
 const AddMenu = () => {
   const { user, userInfo } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState("");
   //console.log(data.image[0].name
   const onSubmit = (dat) => {
+    setLoading(true);
     sendImage().then(
       (res) => (
         (dat.image = res.data.url),
@@ -23,7 +26,26 @@ const AddMenu = () => {
             price: dat.price,
             email: userInfo.email,
           })
-          .then((res) => console.log(res.data))
+          .then(() => setLoading(false))
+          .then(() =>
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: " Item added to Menu successfully!",
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          )
+          .catch(() =>
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "Something went wrong!",
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          )
+          .catch(() => setLoading(false))
       )
     );
   };
@@ -114,8 +136,10 @@ const AddMenu = () => {
             />
           </div>
           <button className="btn bg-green text-white px-6">
-            {" "}
-            Add Item <FaUtensils />
+            {loading && (
+              <span className="loading loading-infinity loading-lg text-neutral"></span>
+            )}{" "}
+            {!loading && "Add Item"}
           </button>
         </form>
       </div>

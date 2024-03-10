@@ -8,6 +8,7 @@ const UpdateProfile = () => {
   const { updateUserProfile, userInfo, user, setUserInfo } =
     useContext(AuthContext);
   const [photo, setPhoto] = useState("");
+  const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
   const {
     register,
@@ -37,6 +38,7 @@ const UpdateProfile = () => {
   };
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const name = data.name != "" ? data.name : userInfo.name;
     const photoURL = data.photoURL;
     const city = data.city != "" ? data.city : userInfo.city;
@@ -70,17 +72,29 @@ const UpdateProfile = () => {
             // token: res.data.token,
           })
         )
+        .then(() => setLoading(false))
         .then(() =>
           Swal.fire({
-            position: "top",
+            position: "center",
             icon: "success",
             title: "Profile updated successfully!",
             showConfirmButton: false,
             timer: 1500,
           })
         )
+
         .then(() => navigate("/"))
-        .catch((err) => console.log(err));
+        .then(() => setLoading(false))
+        .catch((err) => setLoading(false))
+        .catch(() =>
+          Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Something went wrong!",
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        );
     });
   };
   // console.log(userInfo);
@@ -173,11 +187,17 @@ const UpdateProfile = () => {
             />
           </div>
           <div className="form-control mt-6">
-            <input
+            <button
               type="submit"
               value="Update"
-              className="btn bg-green text-white"
-            />
+              className="btn bg-green text-white "
+            >
+              {loading ? (
+                <span className="loading loading-infinity loading-lg text-neutral"></span>
+              ) : (
+                "Update"
+              )}
+            </button>
           </div>
         </form>
       </div>

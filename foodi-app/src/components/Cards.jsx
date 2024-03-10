@@ -39,11 +39,11 @@ const Cards = ({ item }) => {
                   : "warning"
               }`,
               title: `${res.data.message}`,
-              showConfirmButton: true,
-              // timer: 1500,
+              showConfirmButton: false,
+              timer: 1500,
             }).then((re) => {
               if (
-                re.isConfirmed &&
+                // re.isConfirmed &&
                 res.data.message != "Item Already in the cart"
               ) {
                 update = Number(Number(cartcount) + 1);
@@ -89,7 +89,7 @@ const Cards = ({ item }) => {
         <p className="w-[220px] font-bold">{item.recipe}</p>
         <div className="card-actions justify-between items-center mt-2">
           <h5 className="font-semibold">
-            <span className="text-sm text-red">$ </span> {item.price}
+            <span className="text-sm text-red">₹</span> {item.price}
           </h5>
           <button
             className="btn bg-green text-white  hover:bg-black hover:text-rose-300"

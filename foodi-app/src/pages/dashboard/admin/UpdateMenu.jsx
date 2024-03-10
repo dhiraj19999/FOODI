@@ -7,11 +7,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import Swal from "sweetalert2";
 const UpdateMenu = () => {
   const { id } = useParams();
   const { user, userInfo } = useContext(AuthContext);
   const [item, setItem] = useState("");
   const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState("");
   ///console.log(item);
   const fetchData = async () => {
@@ -20,6 +22,7 @@ const UpdateMenu = () => {
       .then((res) => setItem(res.data.item));
   };
   const onSubmit = (dat) => {
+    setLoading(true);
     sendImage().then(
       (res) => (
         (dat.image = res.data.url),
@@ -33,7 +36,26 @@ const UpdateMenu = () => {
             price: dat.price,
             email: userInfo.email,
           })
-          .then((res) => console.log("udate", res.data))
+          .then(() => setLoading(false))
+          .then(() =>
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: " Item Updated successfully!",
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          )
+          .catch(() =>
+            Swal.fire({
+              position: "center",
+              icon: "warning",
+              title: "Something went wrong!",
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          )
+          .catch(() => setLoading(false))
       )
     );
   };
@@ -131,8 +153,10 @@ const UpdateMenu = () => {
             />
           </div>
           <button className="btn bg-green text-white px-6">
-            {" "}
-            Update Item <FaUtensils />
+            {loading && (
+              <span className="loading loading-infinity loading-lg text-neutral"></span>
+            )}{" "}
+            {!loading && "Update Item"}
           </button>
         </form>
       </div>

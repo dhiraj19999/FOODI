@@ -36,7 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/orders",
-        element: <Orders />,
+        element: (
+          <PrivateRouter>
+            <Orders />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/signup",
@@ -44,7 +48,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/update-profile",
-        element: <UpdateProfile />,
+        element: (
+          <PrivateRouter>
+            {" "}
+            <UpdateProfile />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/cart/:email",
@@ -56,7 +65,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/process-checkout",
-        element: <Payment />,
+        element: (
+          <PrivateRouter>
+            {" "}
+            <Payment />
+          </PrivateRouter>
+        ),
       },
     ],
   },
@@ -66,27 +80,52 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Dashbord />,
+        element: (
+          <PrivateRouter>
+            <Dashbord />{" "}
+          </PrivateRouter>
+        ),
       },
       {
         path: "mangeOrders",
-        element: <Order />,
+        element: (
+          <PrivateRouter>
+            <Order />{" "}
+          </PrivateRouter>
+        ),
       },
       {
         path: "users",
-        element: <Users />,
+        element: (
+          <PrivateRouter>
+            <Users />{" "}
+          </PrivateRouter>
+        ),
       },
       {
         path: "addmenu",
-        element: <AddMenu />,
+        element: (
+          <PrivateRouter>
+            <AddMenu />{" "}
+          </PrivateRouter>
+        ),
       },
       {
         path: "manage-items",
-        element: <ManageMenu />,
+        element: (
+          <PrivateRouter>
+            {" "}
+            <ManageMenu />{" "}
+          </PrivateRouter>
+        ),
       },
       {
         path: "update-menu/:id",
-        element: <UpdateMenu />,
+        element: (
+          <PrivateRouter>
+            <UpdateMenu />{" "}
+          </PrivateRouter>
+        ),
       },
     ],
   },

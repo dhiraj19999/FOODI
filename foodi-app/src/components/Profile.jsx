@@ -12,6 +12,7 @@ const Profile = ({ user }) => {
     logOut,
     setUserInfo,
     userInfo,
+
     cartcount,
     setCartcount,
     updateCartcount,
@@ -77,12 +78,21 @@ const Profile = ({ user }) => {
             <li>
               <Link to={"/orders"}>Orders</Link>
             </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <a>Setting</a>
-            </li>
+            {userInfo.role == "admin" ? (
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+            ) : (
+              ""
+            )}
+            {userInfo ? (
+              <li>
+                <Link to={user ? `/cart/${user.email}` : "/"}>Cart </Link>
+              </li>
+            ) : (
+              ""
+            )}
+
             <li>
               <a onClick={handleLogout}>Logout</a>
             </li>

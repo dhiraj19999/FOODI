@@ -22,6 +22,7 @@ const Modal = () => {
     userInfo,
   } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // redirecting to home page or specifig page
   const location = useLocation();
@@ -29,13 +30,21 @@ const Modal = () => {
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
+    setLoading(true);
     const email = data.email;
     const password = data.password;
     // console.log(email, password)
     login(email, password)
       .then((result) => {
         // const user = result.user;
-        alert("Login successfull");
+        setLoading(false);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         if (user && user?.email) {
           axios
             .get(`http://localhost:4000/cart?email=${user.email}`)
@@ -73,7 +82,7 @@ const Modal = () => {
                   })
                 );
             })
-            .catch((err) => console.log(err));
+            .catch((err) => setLoading(false));
         }
 
         document.getElementById("my_modal_5").close();
@@ -82,6 +91,7 @@ const Modal = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
+        setLoading(false);
         setErrorMessage("Provide a correct email and password!");
       });
   };
@@ -156,11 +166,17 @@ const Modal = () => {
 
             {/* login btn */}
             <div className="form-control mt-4">
-              <input
+              <button
                 type="submit"
                 value="Login"
-                className="btn bg-green text-white"
-              />
+                className="btn bg-green text-white "
+              >
+                {loading ? (
+                  <span className="loading loading-infinity loading-lg text-neutral"></span>
+                ) : (
+                  "Login"
+                )}
+              </button>
             </div>
 
             <p className="text-center my-2">
@@ -173,7 +189,6 @@ const Modal = () => {
                 Signup Now
               </Link>{" "}
             </p>
-
             <button
               htmlFor="my_modal_5"
               onClick={() => document.getElementById("my_modal_5").close()}
@@ -182,22 +197,6 @@ const Modal = () => {
               ✕
             </button>
           </form>
-
-          {/* social sign in */}
-          <div className="text-center space-x-3 mb-5">
-            <button
-              className="btn btn-circle hover:bg-green hover:text-white"
-              onClick={handleLogin}
-            >
-              <FaGoogle />
-            </button>
-            <button className="btn btn-circle hover:bg-green hover:text-white">
-              <FaFacebookF />
-            </button>
-            <button className="btn btn-circle hover:bg-green hover:text-white">
-              <FaGithub />
-            </button>
-          </div>
         </div>
       </div>
     </dialog>

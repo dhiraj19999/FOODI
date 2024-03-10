@@ -164,7 +164,7 @@ const CartPage = () => {
                     <td className="font-medium">{el.name}</td>
                     <td>
                       <button
-                        className="btn btn-xs"
+                        className="btn btn-xs bg-green text-white"
                         onClick={() => handleDEC(el)}
                         disabled={el.quantity == 1}
                       >
@@ -177,17 +177,17 @@ const CartPage = () => {
                         readOnly
                       />
                       <button
-                        className="btn btn-xs"
+                        className="btn btn-xs  bg-green text-white"
                         disabled={el.quantity == 4}
                         onClick={() => handleINC(el)}
                       >
                         +
                       </button>
                     </td>
-                    <td>{el.price}</td>
+                    <td>₹{el.price}</td>
                     <th>
                       <button
-                        className="btn btn-ghost btn-xs"
+                        className="btn btn-ghost btn-xs bg-rose-400 text-white"
                         onClick={() => handleDelete(el)}
                       >
                         <FaTrash /> Delete
@@ -217,8 +217,8 @@ const CartPage = () => {
         </div>
         <div className="md:w-1/2 space-y-3 ">
           <h3 className="font-medium">Shopping Details</h3>
-          <p>Total Items:{cartcount}</p>
-          <p>Total Price:{tot}</p>
+          <p>Total Items: {cartcount}</p>
+          <p>Total Price: ₹{tot}</p>
 
           {cartcount > 0 ? (
             <Link to={"/process-checkout"}>
