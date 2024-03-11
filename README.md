@@ -4,10 +4,16 @@
 
 <img src="https://github.com/dhiraj19999/FOODI/assets/106136277/99f1c3b7-5f7e-4891-8ac2-945033a29241"/>
 
-<b>MOVIX</b>  is an platform where you can see the cast , reviews and trailers about movies: <br />
-1. Sorting<br />
-2. Search Movie<br />
-3.  Selecting the Geners<br />
-4. Switch from Move to Shows and vice-versa<br />
-5. See latest movie and show's Review,cast and trailer  <br />
+<b>FOODI</b>  is an Food ordering platform where you can order your favorite food by sitting in your home: <br />
+1. Sorting by Category<br />
+2. Sorting by Price<br />
+3.  Signup <br />
+4. Login<br />
+5. Admin Dashbord <br />
+6. Stripe payment method <br />
+7. Add to cart  <br />
+8. Cart quantity increase and decrease  <br />
+9. Profile update <br/>
+10. Order Status <br/>
+11. and many more <br/>
 <hr />
