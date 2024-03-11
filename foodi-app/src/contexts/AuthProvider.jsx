@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+//import admin from "firebase-admin";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -7,8 +8,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  deleteUser,
   updateProfile,
 } from "firebase/auth";
+
 import app from "../firebase/firebase.config";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
@@ -50,6 +53,13 @@ const AuthProvider = ({ children }) => {
     setCartcount(0);
 
     return signOut(auth);
+  };
+
+  // delete user
+
+  const deleteUserfirebase = (uid) => {
+    // return admin.auth.deleteUser(uid);
+    // deleteUser(auth);
   };
 
   // update profile
@@ -96,6 +106,7 @@ const AuthProvider = ({ children }) => {
     userInfo,
     cartPrice,
     setCartPrice,
+    deleteUserfirebase,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

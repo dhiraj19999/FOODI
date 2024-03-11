@@ -24,7 +24,7 @@ function App() {
   }
 
   const getCartData = async () => {
-    if (user && user?.email) {
+    if (user && user.email) {
       // console.log("email", user.email);
       await axios
         .get(
@@ -41,14 +41,15 @@ function App() {
           ),*/
 
           setUserInfo({
-            name: res.data.user.name,
-            email: res.data.user.email,
-            url: res.data.user.photoURL,
-            role: res.data.user.role,
-            city: res.data.user.city,
-            pin: res.data.user.pin,
-            local: res.data.user.local,
-            id: res.data.user._id,
+            name: res?.data.user.name,
+            email: res?.data.user.email,
+            url: res?.data.user.photoURL,
+            role: res?.data.user.role,
+            city: res?.data.user.city,
+            pin: res?.data.user.pin,
+            local: res?.data.user.local,
+            id: res?.data.user._id,
+            uid: res?.data.user.uid,
           })
         );
       await axios

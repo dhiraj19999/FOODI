@@ -6,7 +6,7 @@ import Signup from "../components/Signup";
 import PrivateRouter from "../PrivateRouter/PrivateRouter";
 import UpdateProfile from "../pages/dashboard/UpdateProfile";
 import CartPage from "../pages/shop/CartPage";
-
+import AdminRouter from "../PrivateRouter/AdminRouter";
 import DashbordLayout from "../layout/DashbordLayout";
 import Dashbord from "../pages/dashboard/admin/Dashbord";
 import Users from "../pages/dashboard/admin/Users";
@@ -81,50 +81,50 @@ const router = createBrowserRouter([
       {
         path: "",
         element: (
-          <PrivateRouter>
+          <AdminRouter>
             <Dashbord />{" "}
-          </PrivateRouter>
+          </AdminRouter>
         ),
       },
       {
         path: "mangeOrders",
         element: (
-          <PrivateRouter>
-            <Order />{" "}
-          </PrivateRouter>
+          <AdminRouter>
+            <Order />
+          </AdminRouter>
         ),
       },
       {
         path: "users",
         element: (
-          <PrivateRouter>
+          <AdminRouter>
             <Users />{" "}
-          </PrivateRouter>
+          </AdminRouter>
         ),
       },
       {
         path: "addmenu",
         element: (
-          <PrivateRouter>
+          <AdminRouter>
             <AddMenu />{" "}
-          </PrivateRouter>
+          </AdminRouter>
         ),
       },
       {
         path: "manage-items",
         element: (
-          <PrivateRouter>
+          <AdminRouter>
             {" "}
             <ManageMenu />{" "}
-          </PrivateRouter>
+          </AdminRouter>
         ),
       },
       {
         path: "update-menu/:id",
         element: (
-          <PrivateRouter>
+          <AdminRouter>
             <UpdateMenu />{" "}
-          </PrivateRouter>
+          </AdminRouter>
         ),
       },
     ],

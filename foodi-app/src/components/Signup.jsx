@@ -26,6 +26,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [loadin, setLoadin] = useState(false);
   const onSubmit = (data) => {
+    setLoadin(true);
     const email = data.email;
     const password = data.password;
     const city = data.city;
@@ -44,10 +45,10 @@ const Signup = () => {
     createUser(email, password)
       .then((result) => {
         // Signed up
-        setLoadin(true);
-        console.log(result);
 
-        const user = result.user;
+        console.log("firebase", result.user.uid);
+
+        const useruid = result.user.uid;
 
         sendImage().then((res) => {
           const sendUsertoBackend = {
@@ -58,6 +59,7 @@ const Signup = () => {
             city: city,
             pin: pin,
             local: local,
+            uid: useruid,
           };
           axios
             .post(
@@ -73,26 +75,28 @@ const Signup = () => {
                   url: res.data.photoURL,
                   role: res.data.role,
                 })
-              )*/ setLoadin(false),
-              //  console.log("token", res.data.token, "name", res.data.user.name),
-              setUserInfo({
-                name: res.data.name,
-                email: res.data.email,
-                url: res.data.photoURL,
-                role: res.data.role,
-                city: res.data.city,
-                pin: res.data.pin,
-                local: res.data.local,
-                id: res.data._id,
+              )*/
+                //  console.log("token", res.data.token, "name", res.data.user.name),
+                setUserInfo({
+                  name: res.data.name,
+                  email: res.data.email,
+                  url: res.data.photoURL,
+                  role: res.data.role,
+                  city: res.data.city,
+                  pin: res.data.pin,
+                  local: res.data.local,
+                  id: res.data._id,
+                  uid: res.data.uid,
 
-                // token: res.data.token,
-              })
+                  // token: res.data.token,
+                }),
+              setLoadin(false)
             );
         });
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Account creation successfully done!",
+          title: "Account creation successfully done !",
           showConfirmButton: false,
           timer: 1500,
         })

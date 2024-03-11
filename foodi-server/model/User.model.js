@@ -21,6 +21,9 @@ const userSchema = new Schema({
   local: {
     type: String,
   },
+  uid: {
+    type: String,
+  },
 });
 
 export const User = mongoose.model("User", userSchema);

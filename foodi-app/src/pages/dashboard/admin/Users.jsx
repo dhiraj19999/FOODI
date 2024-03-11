@@ -6,11 +6,11 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 const Users = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { user, userInfo } = useContext(AuthContext);
+  const { user, userInfo, deleteUserfirebase } = useContext(AuthContext);
   {
     /*  Get All users   */
   }
-  console.log(user.email);
+  console.log(userInfo.uid);
   const getAlluser = async () => {
     setLoading(true);
     await axios
@@ -50,13 +50,25 @@ const Users = () => {
         console.log(res);
         getAlluser();
       })
-      .then(() => deleteOrder(email));
+      .then(() => deleteOrder(email))
+      .then(() => deletecardorder(email));
   };
 
   const deleteOrder = async (email) => {
     await axios
       .post(
         `https://foodi-server-t8gj.onrender.com/orders/deleteAll?email=${email}`,
+        {
+          email: userInfo.email,
+        }
+      )
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+  const deletecardorder = async (email) => {
+    await axios
+      .post(
+        `https://foodi-server-t8gj.onrender.com/cart/deleteAll?email=${email}`,
         {
           email: userInfo.email,
         }

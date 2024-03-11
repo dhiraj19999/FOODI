@@ -70,6 +70,7 @@ const Modal = () => {
                         pin: res.data.user.pin,
                         local: res.data.user.local,
                         id: res.data.user._id,
+                        uid: res?.data.user.uid,
                       })
                     ),
                   setUserInfo({
@@ -81,6 +82,7 @@ const Modal = () => {
                     pin: res.data.user.pin,
                     local: res.data.user.local,
                     id: res.data.user._id,
+                    uid: res?.data.user.uid,
                   })
                 );
             })

@@ -36,6 +36,8 @@ const Profile = ({ user }) => {
         }).then((result) => {
           if (result.isConfirmed) {
             localStorage.removeItem("count");
+            setCartcount(0);
+            setUserInfo("");
             <Navigate to={"/"} />;
             // window.location.reload();
           }
@@ -57,9 +59,10 @@ const Profile = ({ user }) => {
           >
             <div className="w-10 rounded-full  ">
               {userInfo?.url ? (
-                <img alt={user?.name || "User"} src={userInfo?.url} />
+                <img src={userInfo?.url} />
               ) : (
-                <img alt="user" src="" />
+                //<img alt="user" src="" />
+                ""
               )}
             </div>
           </label>
