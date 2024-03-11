@@ -72,4 +72,5 @@
 <h2>All User Managment</h2>
 
 
-<img src="(https://github.com/dhiraj19999/FOODI/assets/106136277/468e87ee-292b-4b56-904c-3c11a4c7cd80"/>
+
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/cdb017c8-7e74-4ea4-81e4-b23cee91788b" />
