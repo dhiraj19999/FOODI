@@ -11,6 +11,18 @@ export const getOrders = async (req, res) => {
     res.status(500).json({ message: error });
   }
 };
+export const DeleteAllorder = async (req, res) => {
+  const email = req.query.email;
+  try {
+    const resp = await Order.find({ email: email });
+
+    await resp.map((el) => console.log(el));
+    const deleteCartreq = await Order.deleteMany({ email: email });
+    res.status(200).json({ deleteCartreq, message: "deletd Successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+};
 
 /* route for user*/
 export const createorder = async (req, res) => {

@@ -87,6 +87,7 @@ export const DeleteAll = async (req, res) => {
   const email = req.query.email;
   try {
     const resp = await Cart.find({ email: email });
+
     const itemid = await resp.map((id) => new ObjectId(id));
     const deleteCartreq = await Cart.deleteMany({ _id: { $in: itemid } });
     res.status(200).json({ deleteCartreq, message: "deletd Successfully" });

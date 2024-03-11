@@ -41,7 +41,7 @@ const Users = () => {
   {
     /*   delete User   */
   }
-  const deleteUser = async (id) => {
+  const deleteUser = async (id, email) => {
     await axios
       .delete(`https://foodi-server-t8gj.onrender.com/users/${id}`, {
         email: userInfo.email,
@@ -49,7 +49,20 @@ const Users = () => {
       .then((res) => {
         console.log(res);
         getAlluser();
-      });
+      })
+      .then(() => deleteOrder(email));
+  };
+
+  const deleteOrder = async (email) => {
+    await axios
+      .post(
+        `https://foodi-server-t8gj.onrender.com/orders/deleteAll?email=${email}`,
+        {
+          email: userInfo.email,
+        }
+      )
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -99,8 +112,9 @@ const Users = () => {
                     </td>
                     <td>
                       <button
-                        onClick={() => deleteUser(el._id)}
+                        onClick={() => deleteUser(el._id, el.email)}
                         className="btn btn-xs bg-orange-500 text-white"
+                        disabled={el.email == user.email}
                       >
                         <FaTrashAlt />
                       </button>

@@ -13,7 +13,7 @@ export const CheckAdmin = async (req, res, next) => {
       return res.status(401).json({ msg: "unauthorised" });
     }
 
-    console.log("admin", userExist);
+    // console.log("admin", userExist);
     next();
   } catch (error) {
     return res.status(500).json({ msg: "internal server error" });
