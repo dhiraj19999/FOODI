@@ -28,3 +28,18 @@
 <h2>Cart Page</h2>
 
 <img src="https://github.com/dhiraj19999/FOODI/assets/106136277/c1311097-e8c8-4b8f-9283-fd581cdd639f"/>
+
+
+<h2>Order Page</h2>
+
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/9377e3df-95e4-4cfd-a74a-ecdfe7e4aed2"/>
+
+
+
+<h2>Checkout page</h2>
+
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/e941be97-fb2f-4eb7-b210-6fac12702f16"/>
+
+<h2>RealTime Stripe Payment </h2>
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/2188148b-716b-4685-9011-afb1463a6b8e"/>
+
