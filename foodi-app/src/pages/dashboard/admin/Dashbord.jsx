@@ -46,7 +46,7 @@ const Dashbord = () => {
 
   const getOrders = async () => {
     await axios
-      .get("http://localhost:4000/orders", userInfo?.email)
+      .get("https://foodi-server-t8gj.onrender.com/orders", userInfo?.email)
       .then((res) => {
         dashCalculation(res.data);
       });
@@ -82,10 +82,12 @@ const Dashbord = () => {
   };
 
   const fetchData = async () => {
-    await axios.get("http://localhost:4000/menu").then((res) => {
-      stock(res.data);
-      setTotalmenu(res.data.length);
-    });
+    await axios
+      .get("https://foodi-server-t8gj.onrender.com/menu")
+      .then((res) => {
+        stock(res.data);
+        setTotalmenu(res.data.length);
+      });
   };
 
   const stock = (data) => {
@@ -110,7 +112,7 @@ const Dashbord = () => {
 
   const getAlluser = async () => {
     await axios
-      .get("http://localhost:4000/users")
+      .get("https://foodi-server-t8gj.onrender.com/users")
       .then((res) => {
         setTotalUser(res.data.length);
       })

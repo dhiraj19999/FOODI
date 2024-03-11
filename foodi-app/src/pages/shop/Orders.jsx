@@ -8,10 +8,12 @@ const Orders = () => {
   const [data, setData] = useState([]);
   const getOrders = async () => {
     await axios
-      .get(`http://localhost:4000/orders/getuserorder?email=${user.email}`)
+      .get(
+        `https://foodi-server-t8gj.onrender.com/orders/getuserorder?email=${user.email}`
+      )
       .then((res) => setData(res.data));
   };
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
     getOrders();
   }, []);
@@ -19,9 +21,9 @@ const Orders = () => {
   const ren = (item) => {
     return item.map((el, ind) => {
       x = x + 1;
-      console.log("x", x);
+      // console.log("x", x);
       return (
-        <tr key={el}>
+        <tr key={ind}>
           <th>{x}</th>
           <td>
             <div className="flex items-center gap-3">

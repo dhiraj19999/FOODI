@@ -27,7 +27,9 @@ function App() {
     if (user && user?.email) {
       // console.log("email", user.email);
       await axios
-        .get(`http://localhost:4000/users/singleuser?email=${user.email}`)
+        .get(
+          `https://foodi-server-t8gj.onrender.com/users/singleuser?email=${user.email}`
+        )
         .then((res) =>
           /* localStorage.setItem(
             "userData",
@@ -50,7 +52,7 @@ function App() {
           })
         );
       await axios
-        .get(`http://localhost:4000/cart?email=${user.email}`)
+        .get(`https://foodi-server-t8gj.onrender.com/cart?email=${user.email}`)
         .then((res) => {
           // console.log(res.data);
 

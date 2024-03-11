@@ -11,7 +11,7 @@ const Order = () => {
   console.log(userInfo.email);
   const getOrders = async () => {
     await axios
-      .get("http://localhost:4000/orders", userInfo.email)
+      .get("https://foodi-server-t8gj.onrender.com/orders", user.email)
       .then((res) => setData(res.data));
   };
   const handleDelete = async (item) => {
@@ -28,7 +28,7 @@ const Order = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:4000/orders/${item._id}`, {
+          .delete(`https://foodi-server-t8gj.onrender.com/orders/${item._id}`, {
             email: userInfo.email,
           })
           .then((res) => getOrders())
@@ -56,7 +56,7 @@ const Order = () => {
 
   const updateStat = async (stat, id) => {
     await axios
-      .patch(`http://localhost:4000/orders/${id}`, {
+      .patch(`https://foodi-server-t8gj.onrender.com/orders/${id}`, {
         status: stat,
         email: userInfo.email,
       })

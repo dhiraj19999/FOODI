@@ -18,7 +18,7 @@ const UpdateMenu = () => {
   ///console.log(item);
   const fetchData = async () => {
     axios
-      .get(`http://localhost:4000/menu/${id}`)
+      .get(`https://foodi-server-t8gj.onrender.com/menu/${id}`)
       .then((res) => setItem(res.data.item));
   };
   const onSubmit = (dat) => {
@@ -28,7 +28,7 @@ const UpdateMenu = () => {
         (dat.image = res.data.url),
         console.log("dat.image", dat.image),
         axios
-          .patch(`http://localhost:4000/menu/${id}`, {
+          .patch(`https://foodi-server-t8gj.onrender.com/menu/${id}`, {
             name: dat.name,
             recipe: dat.recipe,
             image: res.data.url,

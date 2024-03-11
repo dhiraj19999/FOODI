@@ -47,13 +47,15 @@ const Modal = () => {
         });
         if (user && user?.email) {
           axios
-            .get(`http://localhost:4000/cart?email=${user.email}`)
+            .get(
+              `https://foodi-server-t8gj.onrender.com/cart?email=${user.email}`
+            )
             .then((res) => {
               setCartcount(res.data.length);
               //localStorage.setItem("count", Number(res.data.length));
               axios
                 .get(
-                  `http://localhost:4000/users/singleuser?email=${user.email}`
+                  `https://foodi-server-t8gj.onrender.com/users/singleuser?email=${user.email}`
                 )
                 .then(
                   (res) =>

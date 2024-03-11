@@ -59,9 +59,14 @@ const Signup = () => {
             pin: pin,
             local: local,
           };
-          axios.post("http://localhost:4000/users", sendUsertoBackend).then(
-            (res) =>
-              /* localStorage.setItem(
+          axios
+            .post(
+              "https://foodi-server-t8gj.onrender.com/users",
+              sendUsertoBackend
+            )
+            .then(
+              (res) =>
+                /* localStorage.setItem(
                 "userData",
                 JSON.stringify({
                   name: res.data.name,
@@ -69,20 +74,20 @@ const Signup = () => {
                   role: res.data.role,
                 })
               )*/ setLoadin(false),
-            //  console.log("token", res.data.token, "name", res.data.user.name),
-            setUserInfo({
-              name: res.data.name,
-              email: res.data.email,
-              url: res.data.photoURL,
-              role: res.data.role,
-              city: res.data.city,
-              pin: res.data.pin,
-              local: res.data.local,
-              id: res.data._id,
+              //  console.log("token", res.data.token, "name", res.data.user.name),
+              setUserInfo({
+                name: res.data.name,
+                email: res.data.email,
+                url: res.data.photoURL,
+                role: res.data.role,
+                city: res.data.city,
+                pin: res.data.pin,
+                local: res.data.local,
+                id: res.data._id,
 
-              // token: res.data.token,
-            })
-          );
+                // token: res.data.token,
+              })
+            );
         });
         Swal.fire({
           position: "center",

@@ -14,7 +14,7 @@ const Users = () => {
   const getAlluser = async () => {
     setLoading(true);
     await axios
-      .get("http://localhost:4000/users")
+      .get("https://foodi-server-t8gj.onrender.com/users")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -29,7 +29,7 @@ const Users = () => {
 
   const makeAdmin = async (id) => {
     await axios
-      .patch(`http://localhost:4000/users/admin/${id}`, {
+      .patch(`https://foodi-server-t8gj.onrender.com/users/admin/${id}`, {
         email: userInfo.email,
       })
       .then((res) => {
@@ -43,7 +43,9 @@ const Users = () => {
   }
   const deleteUser = async (id) => {
     await axios
-      .delete(`http://localhost:4000/users/${id}`, { email: userInfo.email })
+      .delete(`https://foodi-server-t8gj.onrender.com/users/${id}`, {
+        email: userInfo.email,
+      })
       .then((res) => {
         console.log(res);
         getAlluser();

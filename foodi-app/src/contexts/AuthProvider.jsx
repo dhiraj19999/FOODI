@@ -67,9 +67,9 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       if (currentUser) {
         const userInfo = { email: currentUser.email };
-        axios
-          .post("http://localhost:4000/jwt", userInfo)
-          .then((res) => localStorage.setItem("Access-Token", res.data.token));
+        /* axios
+          .post("https://foodi-server-t8gj.onrender.com//jwt", userInfo)
+          .then((res) => localStorage.setItem("Access-Token", res.data.token));*/
       } else {
         localStorage.removeItem("Access-Token");
       }

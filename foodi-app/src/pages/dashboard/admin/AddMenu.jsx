@@ -18,7 +18,7 @@ const AddMenu = () => {
         (dat.image = res.data.url),
         console.log("dat.image", dat.image),
         axios
-          .post("http://localhost:4000/menu/add", {
+          .post("https://foodi-server-t8gj.onrender.com/menu/add", {
             name: dat.name,
             recipe: dat.recipe,
             image: res.data.url,

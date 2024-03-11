@@ -27,7 +27,7 @@ const Cards = ({ item }) => {
 
       try {
         await axios
-          .post("http://localhost:4000/cart/add", cartItem)
+          .post("https://foodi-server-t8gj.onrender.com/cart/add", cartItem)
           .then((res) => {
             console.log(res.data.message);
 

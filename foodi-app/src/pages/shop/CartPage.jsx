@@ -21,7 +21,7 @@ const CartPage = () => {
   const getCartData = async () => {
     if (user && user?.email) {
       await axios
-        .get(`http://localhost:4000/cart?email=${email}`)
+        .get(`https://foodi-server-t8gj.onrender.com/cart?email=${email}`)
         .then((res) => {
           console.log("cartdata", res.data);
           setData(res.data);
@@ -47,7 +47,7 @@ const CartPage = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:4000/cart/${item._id}`)
+          .delete(`https://foodi-server-t8gj.onrender.com/cart/${item._id}`)
           .then((res) => getCartData())
           .then((res) => {
             Swal.fire({
@@ -73,7 +73,7 @@ const CartPage = () => {
     let action = "INC";
     if (item.quantity <= 4) {
       await axios
-        .put(`http://localhost:4000/cart/${item._id}`, {
+        .put(`https://foodi-server-t8gj.onrender.com/cart/${item._id}`, {
           quantity,
           action,
         })
@@ -86,7 +86,7 @@ const CartPage = () => {
     let action = "DEC";
     if (item.quantity > 1) {
       await axios
-        .put(`http://localhost:4000/cart/${item._id}`, {
+        .put(`https://foodi-server-t8gj.onrender.com/cart/${item._id}`, {
           quantity,
           action,
         })

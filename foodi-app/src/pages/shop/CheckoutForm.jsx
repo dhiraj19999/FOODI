@@ -20,7 +20,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
   const { setCartcount } = useContext(AuthContext);
   const getCartData = async () => {
     await axios
-      .get(`http://localhost:4000/cart?email=${email}`)
+      .get(`https://foodi-server-t8gj.onrender.com/cart?email=${email}`)
       .then((res) => {
         console.log("cartdata", res.data);
         setData(res.data);
@@ -32,7 +32,9 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
   useEffect(() => {
     getCartData();
     axios
-      .post("http://localhost:4000/create-payment-intent", { price })
+      .post("https://foodi-server-t8gj.onrender.com/create-payment-intent", {
+        price,
+      })
       .then(
         (res) => setClientSecret(res.data.clientSecret),
         console.log(clientSecret)
@@ -90,7 +92,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
         `Your transction is success and transction  id is ${paymentIntent.id}`
       );
       axios
-        .post(`http://localhost:4000/orders/add`, {
+        .post(`https://foodi-server-t8gj.onrender.com/orders/add`, {
           email: email,
           price: price,
           status: "Pending",
@@ -101,7 +103,9 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
         .then(
           (res) => setLoading(false),
           axios
-            .post(`http://localhost:4000/cart/deleteAll?email=${email}`)
+            .post(
+              `https://foodi-server-t8gj.onrender.com/cart/deleteAll?email=${email}`
+            )
             .then((res) => setCartcount(0))
             .then(() =>
               Swal.fire({

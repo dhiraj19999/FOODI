@@ -25,7 +25,10 @@ const ManageMenu = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:4000/menu/${item._id}`, userInfo.email)
+          .delete(
+            `https://foodi-server-t8gj.onrender.com/menu/${item._id}`,
+            userInfo.email
+          )
           .then((res) => fetchData())
           .then((res) => {
             Swal.fire({
@@ -47,7 +50,9 @@ const ManageMenu = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:4000/menu");
+      const response = await fetch(
+        "https://foodi-server-t8gj.onrender.com/menu"
+      );
       const data = await response.json();
       setMenu(data);
     } catch (error) {

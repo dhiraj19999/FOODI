@@ -55,7 +55,7 @@ const UpdateProfile = () => {
       };
       axios
         .post(
-          `http://localhost:4000/users/userUpdate/${userInfo.id}`,
+          `https://foodi-server-t8gj.onrender.com/users/userUpdate/${userInfo.id}`,
           updateuser
         )
         .then((res) =>
