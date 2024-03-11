@@ -43,3 +43,33 @@
 <h2>RealTime Stripe Payment </h2>
 <img src="https://github.com/dhiraj19999/FOODI/assets/106136277/2188148b-716b-4685-9011-afb1463a6b8e"/>
 
+
+<h2>Admin Dashbord</h2>
+
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/d5da8f49-74a0-4c5f-bd3e-3853fce7c9a8"/>
+
+<h2>Manage Orders</h2>
+
+
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/eb9abac5-108a-4bc4-88a8-682c5cd25f9f"/>
+
+
+
+
+
+<h2>Add Menu Item</h2>
+
+
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/0feef843-d3f5-45d5-a05a-dbfadc29c419"/>
+
+
+<h2>Manage menu items</h2>
+
+<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/22518dfa-5ec5-45a2-99ac-ff42bad9e835"/>
+
+
+
+<h2>All User Managment</h2>
+
+
+<img src="(https://github.com/dhiraj19999/FOODI/assets/106136277/468e87ee-292b-4b56-904c-3c11a4c7cd80"/>
