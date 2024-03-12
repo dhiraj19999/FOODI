@@ -16,7 +16,7 @@ const Order = () => {
   };
   const handleDelete = async (item) => {
     const { _id, email } = item;
-    console.log("itemdelet", item._id);
+    // console.log("itemdelet", item._id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

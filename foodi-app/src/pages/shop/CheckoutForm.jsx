@@ -22,7 +22,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
     await axios
       .get(`https://foodi-server-t8gj.onrender.com/cart?email=${email}`)
       .then((res) => {
-        console.log("cartdata", res.data);
+        //  console.log("cartdata", res.data);
         setData(res.data);
       })
 
@@ -36,8 +36,8 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
         price,
       })
       .then(
-        (res) => setClientSecret(res.data.clientSecret),
-        console.log(clientSecret)
+        (res) => setClientSecret(res.data.clientSecret)
+        //console.log(clientSecret)
       )
       .catch((err) => console.log(err));
   }, [price]);
@@ -52,7 +52,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
     }
     let card = elements.getElement(CardElement);
 
-    console.log(card);
+    //console.log(card);
     if (card == null) {
       setLoading(false);
       return;
@@ -68,7 +68,7 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
       setLoading(false);
     } else {
       // setCarderror("success");
-      console.log("[paymentmethod]", paymentMethod);
+      //  console.log("[paymentmethod]", paymentMethod);
     }
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -82,11 +82,11 @@ const CheckoutForm = ({ price, cartcount, name, email }) => {
         },
       });
     if (confirmError) {
-      console.log(confirmError);
+      // console.log(confirmError);
       setLoading(false);
     }
     if (paymentIntent.status == "succeeded") {
-      console.log(paymentIntent);
+      // console.log(paymentIntent);
       setLoading(false);
       setCarderror(
         `Your transction is success and transction  id is ${paymentIntent.id}`

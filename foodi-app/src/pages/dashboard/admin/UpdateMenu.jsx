@@ -26,7 +26,7 @@ const UpdateMenu = () => {
     sendImage().then(
       (res) => (
         (dat.image = res.data.url),
-        console.log("dat.image", dat.image),
+        // console.log("dat.image", dat.image),
         axios
           .patch(`https://foodi-server-t8gj.onrender.com/menu/${id}`, {
             name: dat.name,

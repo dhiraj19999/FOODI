@@ -21,7 +21,7 @@ const Menu = () => {
         setMenu(data);
         setFilteredItems(data); // Initially, display all items
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     };
 

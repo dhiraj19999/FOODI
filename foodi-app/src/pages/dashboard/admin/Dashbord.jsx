@@ -41,7 +41,7 @@ const Dashbord = () => {
       totalCal(el.items);
     });
 
-    console.log(tot);
+    // console.log(tot);
   };
 
   const getOrders = async () => {
@@ -53,7 +53,7 @@ const Dashbord = () => {
   };
 
   const totalCal = (item) => {
-    console.log("totalCal");
+    //  console.log("totalCal");
     item.map((el) => {
       tot = tot + el.quantity;
 
@@ -116,7 +116,7 @@ const Dashbord = () => {
       .then((res) => {
         setTotalUser(res.data.length);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
 
   useEffect(() => {

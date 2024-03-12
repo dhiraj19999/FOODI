@@ -13,7 +13,7 @@ const ManageMenu = () => {
   const { user, userInfo } = useContext(AuthContext);
   const handleDelete = async (item) => {
     const { _id, email } = item;
-    console.log("itemdelet", item._id);
+    //console.log("itemdelet", item._id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -56,7 +56,7 @@ const ManageMenu = () => {
       const data = await response.json();
       setMenu(data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
 

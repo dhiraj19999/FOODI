@@ -16,7 +16,7 @@ const Users = () => {
     await axios
       .get("https://foodi-server-t8gj.onrender.com/users")
       .then((res) => {
-        console.log(res.data);
+        //  console.log(res.data);
         setData(res.data);
         setLoading(false);
       })
@@ -47,7 +47,7 @@ const Users = () => {
         email: userInfo.email,
       })
       .then((res) => {
-        console.log(res);
+        //  console.log(res);
         getAlluser();
       })
       .then(() => deleteOrder(email))
@@ -62,7 +62,7 @@ const Users = () => {
           email: userInfo.email,
         }
       )
-      .then((res) => console.log(res.data))
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
   const deletecardorder = async (email) => {
@@ -73,7 +73,7 @@ const Users = () => {
           email: userInfo.email,
         }
       )
-      .then((res) => console.log(res.data))
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
 

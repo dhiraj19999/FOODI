@@ -22,7 +22,7 @@ const UpdateProfile = () => {
   const from = location.state?.from?.pathname || "/";
   //console.log(userInfo, "user");
 
-  console.log(userInfo);
+  //console.log(userInfo);
 
   useEffect(() => {}, []);
 

@@ -15,15 +15,15 @@ const CartPage = () => {
     cartPrice,
     setCartPrice,
   } = useContext(AuthContext);
-  console.log(user.email);
+  // console.log(user.email);
   const { email } = useParams();
-  console.log("cartdata", data);
+  //console.log("cartdata", data);
   const getCartData = async () => {
     if (user && user?.email) {
       await axios
         .get(`https://foodi-server-t8gj.onrender.com/cart?email=${email}`)
         .then((res) => {
-          console.log("cartdata", res.data);
+          //   console.log("cartdata", res.data);
           setData(res.data);
           totalPrice(res.data);
           updateCartcount(res.data.length);
@@ -35,7 +35,7 @@ const CartPage = () => {
 
   const handleDelete = async (item) => {
     const { _id, email } = item;
-    console.log("itemdelet", item._id);
+    // console.log("itemdelet", item._id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -104,7 +104,7 @@ const CartPage = () => {
       total = total + el.price;
     });
     let roundFig = total.toFixed(0);
-    console.log(roundFig);
+    // console.log(roundFig);
     localStorage.setItem("cartPrice", roundFig);
 
     setCartPrice(localStorage.getItem("cartPrice"));

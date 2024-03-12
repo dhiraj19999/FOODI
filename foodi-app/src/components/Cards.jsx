@@ -48,12 +48,12 @@ const Cards = ({ item }) => {
               ) {
                 update = Number(Number(cartcount) + 1);
                 updateCartcount(update);
-                console.log(cartcount);
+                // console.log(cartcount);
               }
             });
           });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };
