@@ -1,76 +1,113 @@
-<h1 align="center"> FOODI </h1>
-<h2>Homepage</h2>
+# FOODI
 
+## Homepage
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/99f1c3b7-5f7e-4891-8ac2-945033a29241"/>
+![Foodi Logo](https://github.com/dhiraj19999/FOODI/assets/106136277/99f1c3b7-5f7e-4891-8ac2-945033a29241)
 
-<b>FOODI</b>  is an Food ordering platform where you can order your favorite food by sitting in your home: <br />
-1. Sorting by Category<br />
-2. Sorting by Price<br />
-3.  Signup <br />
-4. Login<br />
-5. Admin Dashbord <br />
-6. Stripe payment method <br />
-7. Add to cart  <br />
-8. Cart quantity increase and decrease  <br />
-9. Profile update <br/>
+**FOODI** is a food ordering platform where you can order your favorite food while sitting at home:
 
-10. Order Status <br/>
-11. and many more <br/>
-<hr />
+1. Sorting by Category
+2. Sorting by Price
+3. Signup
+4. Login
+5. Admin Dashboard
+6. Stripe Payment Method
+7. Add to Cart
+8. Cart Quantity Increase and Decrease
+9. Profile Update
+10. Order Status
+11. And many more
 
+---
 
+## Menu Page
 
-<h2>Menu Page</h2>
+![Menu Page](https://github.com/dhiraj19999/FOODI/assets/106136277/049791d6-57fc-48a7-bf7f-f1cf4de8d0b7)
 
-  <img src="https://github.com/dhiraj19999/FOODI/assets/106136277/049791d6-57fc-48a7-bf7f-f1cf4de8d0b7"/>
+---
 
-<h2>Cart Page</h2>
+## Cart Page
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/c1311097-e8c8-4b8f-9283-fd581cdd639f"/>
+![Cart Page](https://github.com/dhiraj19999/FOODI/assets/106136277/c1311097-e8c8-4b8f-9283-fd581cdd639f)
 
+---
 
-<h2>Order Page</h2>
+## Order Page
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/9377e3df-95e4-4cfd-a74a-ecdfe7e4aed2"/>
+![Order Page](https://github.com/dhiraj19999/FOODI/assets/106136277/9377e3df-95e4-4cfd-a74a-ecdfe7e4aed2)
 
+---
 
+## Checkout Page
 
-<h2>Checkout page</h2>
+![Checkout Page](https://github.com/dhiraj19999/FOODI/assets/106136277/e941be97-fb2f-4eb7-b210-6fac12702f16)
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/e941be97-fb2f-4eb7-b210-6fac12702f16"/>
+---
 
-<h2>RealTime Stripe Payment </h2>
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/2188148b-716b-4685-9011-afb1463a6b8e"/>
+## RealTime Stripe Payment
 
+![Stripe Payment](https://github.com/dhiraj19999/FOODI/assets/106136277/2188148b-716b-4685-9011-afb1463a6b8e)
 
-<h2>Admin Dashbord</h2>
+---
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/d5da8f49-74a0-4c5f-bd3e-3853fce7c9a8"/>
+## Admin Dashboard
 
-<h2>Manage Orders</h2>
+![Admin Dashboard](https://github.com/dhiraj19999/FOODI/assets/106136277/d5da8f49-74a0-4c5f-bd3e-3853fce7c9a8)
 
+---
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/eb9abac5-108a-4bc4-88a8-682c5cd25f9f"/>
+## Manage Orders
 
+![Manage Orders](https://github.com/dhiraj19999/FOODI/assets/106136277/eb9abac5-108a-4bc4-88a8-682c5cd25f9f)
 
+---
 
+## Add Menu Item
 
+![Add Menu Item](https://github.com/dhiraj19999/FOODI/assets/106136277/0feef843-d3f5-45d5-a05a-dbfadc29c419)
 
-<h2>Add Menu Item</h2>
+---
 
+## Manage Menu Items
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/0feef843-d3f5-45d5-a05a-dbfadc29c419"/>
+![Manage Menu Items](https://github.com/dhiraj19999/FOODI/assets/106136277/22518dfa-5ec5-45a2-99ac-ff42bad9e835)
 
+---
 
-<h2>Manage menu items</h2>
+## All User Management
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/22518dfa-5ec5-45a2-99ac-ff42bad9e835"/>
+![User Management](https://github.com/dhiraj19999/FOODI/assets/106136277/cdb017c8-7e74-4ea4-81e4-b23cee91788b)
 
+---
 
+## Stripe Payment Test Cards
 
-<h2>All User Managment</h2>
+**Important:** When testing Stripe payments in India, please use **Indian dummy test cards**. Test cards from other countries may not work due to regional restrictions on payment processing.
 
+### Recommended Dummy Test Cards for Stripe Payments:
 
+- **Indian test card** (works for most scenarios):
+  - **Card Number**: `4000003560000008`
+  - **Expiry Date**: Any future date
+  - **CVC**: Any 3 digits (e.g., `123`)
 
-<img src="https://github.com/dhiraj19999/FOODI/assets/106136277/cdb017c8-7e74-4ea4-81e4-b23cee91788b" />
+> **Note**: You can use other test cards provided by Stripe for different payment scenarios (e.g., declined cards, insufficient funds), but for this demo, please use the above card for successful transactions.
+
+For more information on Stripe's testing cards, please refer to their [official documentation](https://stripe.com/docs/testing#international-cards).
+
+---
+
+Feel free to update this section if needed!
+
+---
+
+### Note:
+
+This updated README includes:
+
+- **Indian dummy test card information** for Stripe payment testing.
+- Organized structure with sections about your project like **Homepage**, **Menu**, **Cart Page**, etc.
+- **Admin Dashboard** and management features, including **User Management** and **Menu Item Management**.
+
+If you want to add or modify anything, feel free to ask!
+

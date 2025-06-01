@@ -1,81 +1,53 @@
 import "./App.css";
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
-import { useContext, useEffect } from "react";
-import AuthProvider from "./contexts/AuthProvider.jsx";
-import { AuthContext } from "../src/contexts/AuthProvider.jsx";
-import "./index.css";
-import { RouterProvider, json } from "react-router-dom";
+import AuthProvider, { AuthContext } from "./contexts/AuthProvider.jsx";
+import { RouterProvider } from "react-router-dom";
 import router from "./router/Router.jsx";
 
-import Navbar from "./components/Navbar.jsx";
 function App() {
-  const {
-    user,
-    updateCartcount,
-    setUserInfo,
-    userInfo,
-    setCartcount,
-    cartcount,
-  } = useContext(AuthContext);
-  if (!user) {
-    setCartcount(0);
-  }
+  const { user, setUserInfo, setCartcount, cartcount } = useContext(AuthContext);
 
   const getCartData = async () => {
     if (user && user.email) {
-      // console.log("email", user.email);
-      await axios
-        .get(
+      try {
+        const resUser = await axios.get(
           `https://foodi-server-t8gj.onrender.com/users/singleuser?email=${user.email}`
-        )
-        .then((res) =>
-          /* localStorage.setItem(
-            "userData",
-            JSON.stringify({
-              name: res.data.user.name,
-              url: res.data.user.photoURL,
-              role: res.data.user.role,
-            })
-          ),*/
-
-          setUserInfo({
-            name: res?.data.user.name,
-            email: res?.data.user.email,
-            url: res?.data.user.photoURL,
-            role: res?.data.user.role,
-            city: res?.data.user.city,
-            pin: res?.data.user.pin,
-            local: res?.data.user.local,
-            id: res?.data.user._id,
-            uid: res?.data.user.uid,
-          })
         );
-      await axios
-        .get(`https://foodi-server-t8gj.onrender.com/cart?email=${user.email}`)
-        .then((res) => {
-          // console.log(res.data);
+        setUserInfo({
+          name: resUser?.data.user.name,
+          email: resUser?.data.user.email,
+          url: resUser?.data.user.photoURL,
+          role: resUser?.data.user.role,
+          city: resUser?.data.user.city,
+          pin: resUser?.data.user.pin,
+          local: resUser?.data.user.local,
+          id: resUser?.data.user._id,
+          uid: resUser?.data.user.uid,
+        });
 
-          setCartcount(res.data.length);
-        })
-        .catch((err) => console.log(err));
+        const resCart = await axios.get(
+          `https://foodi-server-t8gj.onrender.com/cart?email=${user.email}`
+        );
+        setCartcount(resCart.data.length);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
+
   useEffect(() => {
     getCartData();
+  }, [user]);
 
+  // Move this inside useEffect to avoid state update during render
+  useEffect(() => {
     if (!user) {
-      // localStorage.removeItem("count");
       setCartcount(0);
     }
-  }, [user, cartcount]);
-  // console.log(userInfo);
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+  }, [user]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
