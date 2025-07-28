@@ -5,19 +5,19 @@
 ![Foodi Logo](https://github.com/dhiraj19999/FOODI/assets/106136277/99f1c3b7-5f7e-4891-8ac2-945033a29241)
 
 🍔 FOODI – Your Favorite Food, Just a Click Away! 🏠📱
-
 Craving something delicious? Order from FOODI and enjoy your favorite meals without leaving home! 🚀🍕🍟
 
-✨ Key Features:
-🔍 Sort by Category & Price – Find what you love faster!
-📝 Signup/Login – Easy access to your account
-🛒 Add to Cart – Add all your cravings in one place
-➕➖ Update Cart Quantity – Increase or decrease items with ease
-💳 Secure Payments – Powered by Stripe for smooth transactions
-👤 Profile Update – Manage your info anytime
-📦 Order Status – Track your food in real-time
-🛠️ Admin Dashboard – Control everything from one place
-...and much more coming soon! 🚧🔥
+✨ Top Features:
+1️⃣ Sort by Category & Price 🔍 – Quickly find what you're hungry for
+2️⃣ Signup/Login 📝 – Hassle-free account access
+3️⃣ Add to Cart 🛒 – Add multiple items with one tap
+4️⃣ Cart Quantity Update ➕➖ – Increase or decrease item count easily
+5️⃣ Stripe Payment Integration 💳 – Fast & secure payments
+6️⃣ Profile Management 👤 – Edit your personal info anytime
+7️⃣ Order Status Tracking 📦 – Stay updated on your delivery
+8️⃣ Admin Dashboard 🛠️ – Powerful tools for managing orders & users
+9️⃣ Mobile-Friendly Design 📲 – Smooth experience across all devices
+🔟 More Features Coming Soon 🚧 – We're always upgrading!
 
 🍽️ FOODI makes ordering food as easy as scrolling your feed. Try it now and satisfy your hunger in style! 😋📲
 
